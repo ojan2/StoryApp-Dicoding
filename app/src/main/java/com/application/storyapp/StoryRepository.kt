@@ -1,32 +1,71 @@
-package com.application.storyapp.network
+package com.application.storyapp
 
 import android.content.Context
-import com.application.storyapp.StoryRepository
-import com.application.storyapp.UserPreferences
 import com.application.storyapp.model.ErrorResponse
-import com.application.storyapp.model.LoginResponse
-import com.application.storyapp.model.RegisterResponse
+import com.application.storyapp.model.FileUploadResponse
+import com.application.storyapp.network.ApiService
+import com.application.storyapp.network.NetworkResult
 import com.google.gson.Gson
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import okio.IOException
 import retrofit2.HttpException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
+import java.io.File
 
-class AuthRepository private constructor(
+class StoryRepository private constructor(
     private val apiService: ApiService,
     private val userPreferences: UserPreferences
 ) {
 
-    // Register function
-    suspend fun register(name: String, email: String, password: String): NetworkResult<RegisterResponse> {
+    // Upload story with image
+    suspend fun uploadStory(
+        imageFile: File,
+        description: String,
+        lat: Float? = null,
+        lon: Float? = null
+    ): NetworkResult<FileUploadResponse> {
         return try {
-            val response = apiService.register(name, email, password)
+            // Get token from preferences
+            val token = userPreferences.getAuthToken().first()
+            if (token.isNullOrEmpty()) {
+                return NetworkResult.Error("Authentication token not found. Please login again.")
+            }
+
+            // Prepare image file
+            val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
+            val imageMultipart = MultipartBody.Part.createFormData(
+                "photo",
+                imageFile.name,
+                requestImageFile
+            )
+
+            // Prepare description
+            val descriptionRequestBody = description.toRequestBody("text/plain".toMediaType())
+
+            // Prepare optional location data
+            val latRequestBody = lat?.toString()?.toRequestBody("text/plain".toMediaType())
+            val lonRequestBody = lon?.toString()?.toRequestBody("text/plain".toMediaType())
+
+            // Make API call - single call with optional parameters
+            val response = apiService.uploadStory(
+                token = "Bearer $token",
+                description = descriptionRequestBody,
+                photo = imageMultipart,
+                lat = latRequestBody,     // Will be null if lat is null
+                lon = lonRequestBody      // Will be null if lon is null
+            )
+
             if (response.error) {
-                NetworkResult.Error(response.message ?: "Registration failed")
+                NetworkResult.Error(response.message ?: "Upload failed")
             } else {
                 NetworkResult.Success(response)
             }
+
         } catch (e: HttpException) {
             handleHttpException(e)
         } catch (e: IOException) {
@@ -35,43 +74,6 @@ class AuthRepository private constructor(
             NetworkResult.Error(e.message ?: "An unexpected error occurred")
         }
     }
-
-    // Login function
-    suspend fun login(email: String, password: String): NetworkResult<LoginResponse> {
-        return try {
-            val response = apiService.login(email, password)
-            if (response.error) {
-                NetworkResult.Error(response.message ?: "Login failed")
-            } else {
-                response.loginResult?.let { loginResult ->
-                    // Save token to DataStore
-                    userPreferences.saveAuthToken(
-                        token = loginResult.token,
-                        userId = loginResult.userId,
-                        userName = loginResult.name
-                    )
-                }
-                NetworkResult.Success(response)
-            }
-        } catch (e: HttpException) {
-            handleHttpException(e)
-        } catch (e: IOException) {
-            handleNetworkException(e)
-        } catch (e: Exception) {
-            NetworkResult.Error(e.message ?: "An unexpected error occurred")
-        }
-    }
-
-    // Logout function
-    suspend fun logout() {
-        userPreferences.clearAuthData()
-    }
-
-    // Get user data
-    fun getAuthToken(): Flow<String?> = userPreferences.getAuthToken()
-    fun getUserId(): Flow<String?> = userPreferences.getUserId()
-    fun getUserName(): Flow<String?> = userPreferences.getUserName()
-    fun isLoggedIn(): Flow<Boolean> = userPreferences.isLoggedIn()
 
     // Error handling helpers
     private fun <T> handleHttpException(e: HttpException): NetworkResult<T> {
@@ -101,6 +103,7 @@ class AuthRepository private constructor(
             403 -> "Access forbidden."
             404 -> "Service not found."
             408 -> "Request timeout. Please try again."
+            413 -> "File too large. Maximum size is 1MB."
             422 -> "Invalid data provided."
             500 -> "Server error. Please try again later."
             502, 503 -> "Service temporarily unavailable."
@@ -110,13 +113,13 @@ class AuthRepository private constructor(
 
     companion object {
         @Volatile
-        private var INSTANCE: AuthRepository? = null
+        private var INSTANCE: StoryRepository? = null
 
         // Updated method to support both old and new usage patterns
-        fun getInstance(context: Context, apiService: ApiService): AuthRepository {
+        fun getInstance(context: Context, apiService: ApiService): StoryRepository {
             return INSTANCE ?: synchronized(this) {
                 val userPreferences = UserPreferences.getInstance(context)
-                INSTANCE ?: AuthRepository(apiService, userPreferences).also { INSTANCE = it }
+                INSTANCE ?: StoryRepository(apiService, userPreferences).also { INSTANCE = it }
             }
         }
 
@@ -124,9 +127,9 @@ class AuthRepository private constructor(
         fun getInstance(
             apiService: ApiService,
             userPreferences: UserPreferences
-        ): AuthRepository {
+        ): StoryRepository {
             return INSTANCE ?: synchronized(this) {
-                INSTANCE ?: AuthRepository(apiService, userPreferences).also { INSTANCE = it }
+                INSTANCE ?: StoryRepository(apiService, userPreferences).also { INSTANCE = it }
             }
         }
     }

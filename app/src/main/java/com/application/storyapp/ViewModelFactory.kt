@@ -9,15 +9,15 @@ import com.application.storyapp.network.AuthRepository
 class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        val apiService = ApiClient.getApiService()
-        val repository = AuthRepository.getInstance(context, apiService)
-
         return when {
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
-                LoginViewModel(repository) as T
+                LoginViewModel(Injection.provideAuthRepository(context)) as T
             }
             modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
-                RegisterViewModel(repository) as T
+                RegisterViewModel(Injection.provideAuthRepository(context)) as T
+            }
+            modelClass.isAssignableFrom(AddStoryViewModel::class.java) -> {
+                AddStoryViewModel(Injection.provideStoryRepository(context)) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
