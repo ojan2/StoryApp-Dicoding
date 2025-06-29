@@ -5,7 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".RegisterFragment">
+    tools:context=".presentation.register.RegisterFragment">
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:src="@drawable/sign_up"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_register_title"
@@ -14,10 +23,8 @@
         android:text="@string/register_title"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_register_name"
@@ -82,10 +89,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="@string/btn_register"
         android:padding="12dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:backgroundTint="@color/blue"
+        android:text="@string/btn_register"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til_register_password" />
 
     <ProgressBar

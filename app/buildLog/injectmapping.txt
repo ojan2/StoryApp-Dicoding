@@ -1,0 +1,23 @@
+# build-id: f46d1c4c-7c3f-4065-8147-40e1a2a5ea18
+# Injections.
+
+1793713355:MALWARE_CHECKS:Malware overlays check -> androidx.appcompat.app.AppCompatDialogFragment.onResume():0 CALLS void com.guardsquare.dexguard.injectedcode.b.a(int,android.view.View,android.app.Activity)
+628455645:MALWARE_CHECKS:Malware overlays check -> androidx.fragment.app.DialogFragment.onResume():0 CALLS void com.guardsquare.dexguard.injectedcode.b.a(int,android.view.View,android.app.Activity)
+1600153705:MALWARE_CHECKS:Malware overlays check -> androidx.fragment.app.ListFragment.onResume():0 CALLS void com.guardsquare.dexguard.injectedcode.b.a(int,android.view.View,android.app.Activity)
+1432640305:MALWARE_CHECKS:Malware overlays check -> androidx.lifecycle.ReportFragment.onResume():0 CALLS void com.guardsquare.dexguard.injectedcode.b.a(int,android.view.View,android.app.Activity)
+762975301:MALWARE_CHECKS:Malware overlays check -> androidx.navigation.fragment.AbstractListDetailFragment.onResume():0 CALLS void com.guardsquare.dexguard.injectedcode.b.a(int,android.view.View,android.app.Activity)
+-1418279677:MALWARE_CHECKS:Malware overlays check -> androidx.navigation.fragment.NavHostFragment.onResume():0 CALLS void com.guardsquare.dexguard.injectedcode.b.a(int,android.view.View,android.app.Activity)
+-391685423:MALWARE_CHECKS:Malware overlays check -> com.application.storyapp.MainActivity.onStart():0 CALLS void com.guardsquare.dexguard.injectedcode.b.a(int,android.view.View,android.app.Activity)
+1707708080:MALWARE_CHECKS:Malware overlays check -> com.application.storyapp.presentation.detail.DetailFragment.onResume():0 CALLS void com.guardsquare.dexguard.injectedcode.b.a(int,android.view.View,android.app.Activity)
+-32439084:MALWARE_CHECKS:Malware overlays check -> com.application.storyapp.presentation.home.HomeFragment.onResume():0 CALLS void com.guardsquare.dexguard.injectedcode.b.a(int,android.view.View,android.app.Activity)
+-554926944:MALWARE_CHECKS:Malware overlays check -> com.application.storyapp.presentation.register.RegisterFragment.onResume():0 CALLS void com.guardsquare.dexguard.injectedcode.b.a(int,android.view.View,android.app.Activity)
+614309676:MALWARE_CHECKS:Malware overlays check -> com.application.storyapp.view.AddStoryFragment.onResume():0 CALLS void com.guardsquare.dexguard.injectedcode.b.a(int,android.view.View,android.app.Activity)
+644069413:MALWARE_CHECKS:Malware overlays check -> com.application.storyapp.view.LoginFragment.onResume():0 CALLS void com.guardsquare.dexguard.injectedcode.b.a(int,android.view.View,android.app.Activity)
+1948360384:MALWARE_CHECKS:Malware overlays check -> com.bumptech.glide.manager.SupportRequestManagerFragment.onResume():0 CALLS void com.guardsquare.dexguard.injectedcode.b.a(int,android.view.View,android.app.Activity)
+-1187780225:MALWARE_CHECKS:Malware overlays check -> com.google.android.material.bottomsheet.BottomSheetDialogFragment.onResume():0 CALLS void com.guardsquare.dexguard.injectedcode.b.a(int,android.view.View,android.app.Activity)
+-1572574178:MALWARE_CHECKS:Malware overlays check -> com.google.android.material.datepicker.MaterialCalendar.onResume():0 CALLS void com.guardsquare.dexguard.injectedcode.b.a(int,android.view.View,android.app.Activity)
+-1444827670:MALWARE_CHECKS:Malware overlays check -> com.google.android.material.datepicker.MaterialDatePicker.onResume():0 CALLS void com.guardsquare.dexguard.injectedcode.b.a(int,android.view.View,android.app.Activity)
+1709136055:MALWARE_CHECKS:Malware overlays check -> com.google.android.material.datepicker.MaterialTextInputPicker.onResume():0 CALLS void com.guardsquare.dexguard.injectedcode.b.a(int,android.view.View,android.app.Activity)
+491948465:MALWARE_CHECKS:Malware overlays check -> com.google.android.material.datepicker.PickerFragment.onResume():0 CALLS void com.guardsquare.dexguard.injectedcode.b.a(int,android.view.View,android.app.Activity)
+-557562396:MALWARE_CHECKS:Malware overlays check -> com.google.android.material.timepicker.MaterialTimePicker.onResume():0 CALLS void com.guardsquare.dexguard.injectedcode.b.a(int,android.view.View,android.app.Activity)
+-1157212416:MALWARE_REACTIONS:N/A -> com.guardsquare.dexguard.injectedcode.l.d(com.guardsquare.dexguard.runtime.report.MalwareDetectorReport,android.app.Activity):0

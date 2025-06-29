@@ -19,17 +19,15 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.application.storyapp.AddStoryViewModel
-import com.application.storyapp.ViewModelFactory
-import com.application.storyapp.createCustomTempFile
+import com.application.storyapp.presentation.add_story.AddStoryViewModel
+import com.application.storyapp.data.ViewModelFactory
 import com.application.storyapp.databinding.FragmentAddStoryBinding
-import com.application.storyapp.model.AddStoryUIState
-import com.application.storyapp.reduceFileImage
-import com.application.storyapp.uriToFile
+import com.application.storyapp.utils.AddStoryUIState
 import java.io.File
 import android.Manifest
-
-
+import com.application.storyapp.utils.createCustomTempFile
+import com.application.storyapp.utils.reduceFileImage
+import com.application.storyapp.utils.uriToFile
 
 
 class AddStoryFragment : Fragment() {
@@ -59,7 +57,7 @@ class AddStoryFragment : Fragment() {
             currentPhotoPath?.let { path ->
                 val file = File(path)
                 val bitmap = BitmapFactory.decodeFile(file.path)
-                binding.ivPreview.setImageBitmap(bitmap)
+               // binding.ivPreview.setImageBitmap(bitmap)
 
                 val reducedFile = reduceFileImage(file)
                 viewModel.setImageFile(reducedFile)
@@ -75,7 +73,7 @@ class AddStoryFragment : Fragment() {
             val selectedImg = result.data?.data as Uri
             selectedImg.let { uri ->
                 val myFile = uriToFile(uri, requireContext())
-                binding.ivPreview.setImageURI(uri)
+                //binding.ivPreview.setImageURI(uri)
 
                 val reducedFile = reduceFileImage(myFile)
                 viewModel.setImageFile(reducedFile)

@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">StoryApp</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="lupa_password">Forgot Password</string>
+    <string name="masukkan_password">Enter Password</string>
+    <string name="masukkan_username">Enter Username</string>
+    <string name="l_login">Login</string>
+    <string name="button_login">Sign In</string>
+    <string name="register_title">Create Account</string>
+    <string name="hint_name">Name</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="btn_register">Register</string>
+    <string name="error_password_min_length">Password must be at least 8 characters</string>
+    <string name="image_preview">Image Preview</string>
+    <string name="camera">Camera</string>
+    <string name="description">Description</string>
+    <string name="gallery">Gallery</string>
+    <string name="upload">Upload</string>
+    <string name="button_add_story">Add Story</string>
+    <string name="photo">Photo</string>
+    <string name="app_widget">App Widget</string>
+    <string name="empty_text">No data available</string>
+    <string name="login_succes">Login Successful</string>
+    <string name="welcome">Welcome back</string>
+    <string name="continue_">Continue</string>
+    <string name="image_welcome">Image Welcome</string>
+    <string name="dicoding">Dicoding Story</string>
+    <string name="Logout">Logout</string>
+</resources>

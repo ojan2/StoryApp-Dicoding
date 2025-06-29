@@ -1,0 +1,37 @@
+-verbose
+
+-include /lib/dexguard-release-aggressive.pro
+-include /lib/dexguard-rasp.pro
+
+######################################## Print Build Log ########################################
+-printconfiguration buildLog/fullconfig.txt
+-printmapping buildLog/mapping.txt
+-printresourcemapping buildLog/resourcemapping.txt
+-printresourcefilenamemapping buildLog/esourcefilenamemapping.txt
+-printseeds buildLog/seeds.txt
+-printusage buildLog/usage.txt
+-printresourceusage buildLog/resourceusage.txt
+-printinjectmapping buildLog/injectmapping.txt
+
+
+######################################## RASP ########################################
+
+################# ThreatCast #############
+
+##################################### OBFUSCATE #############################################################
+
+
+
+##################################  String Encryption  ###################################
+#-encryptstrings "https://event-api.dicoding.dev/"
+
+# Class encryption
+-encryptclasses com.example.androidfundamental.data.remote.retrofit.**
+-encryptclasses com.example.androidfundamental.data.local.entity.**
+-encryptclasses com.example.androidfundamental.utils.**
+
+-malwareprotect overlays
+-malwaremessage overlays string/overlays_message
+#-malwareprotect screenrecording class com.example.sampleappmodularactivity.BaseCore, com.journeyapps.barcodescanner.CaptureActivity**
+###################################### AutoConfig  ###################################
+

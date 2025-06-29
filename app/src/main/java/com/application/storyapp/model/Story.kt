@@ -1,5 +1,9 @@
 package com.application.storyapp.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Story(
     val id: String,
     val name: String,
@@ -8,4 +12,4 @@ data class Story(
     val createdAt: String,
     val lat: Float? = null,
     val lon: Float? = null
-)
+) : Parcelable

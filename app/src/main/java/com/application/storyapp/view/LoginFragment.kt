@@ -1,5 +1,6 @@
 package com.application.storyapp.view
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
 import android.text.Editable
@@ -11,14 +12,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.application.storyapp.LoginViewModel
+import androidx.navigation.navOptions
+import com.application.storyapp.presentation.login.LoginViewModel
 import com.application.storyapp.R
-import com.application.storyapp.ViewModelFactory
+import com.application.storyapp.data.ViewModelFactory
 import com.application.storyapp.databinding.FragmentLoginBinding
-import com.application.storyapp.model.LoginResult
-import com.application.storyapp.model.LoginUIState
-import com.application.storyapp.network.ApiClient
-import com.application.storyapp.network.AuthRepository
+import com.application.storyapp.utils.LoginResult
+import com.application.storyapp.utils.LoginUIState
 
 
 class LoginFragment : Fragment() {
@@ -136,18 +136,29 @@ class LoginFragment : Fragment() {
             .show()
     }
 
+    @SuppressLint("StringFormatInvalid")
     private fun showSuccessDialog(loginResult: LoginResult) {
         AlertDialog.Builder(requireContext())
-            .setTitle("Login Successful")
-            .setMessage("Welcome back, ${loginResult.name}!")
-            .setPositiveButton("Continue") { dialog, _ ->
+            .setTitle(R.string.login_succes)
+            .setMessage(getString(R.string.welcome, loginResult.name))
+            .setPositiveButton(R.string.continue_) { dialog, _ ->
                 dialog.dismiss()
-                findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
-              //  navigateToMainActivity()
+                findNavController().navigate(
+                    R.id.action_loginFragment_to_homeFragment,
+                    null,
+                    navOptions {
+                        // Hapus semua fragment sebelumnya sampai splash
+                        popUpTo(R.id.splashFragment) {
+                            inclusive = true
+                        }
+                    }
+                )
             }
             .setCancelable(false)
             .show()
     }
+
+
 
 //    private fun navigateToMainActivity() {
 //        // Navigate to MainActivity or Main Screen

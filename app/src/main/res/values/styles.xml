@@ -3,4 +3,8 @@
     <style name="TextInputLayout.BlueOutline" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
         <item name="boxStrokeColor">@color/blue</item>
     </style>
+    <style name="ThemeOverlay.MyStackWidget.AppWidgetContainer" parent="">
+        <item name="appWidgetBackgroundColor">@color/blue</item>
+        <item name="appWidgetTextColor">@color/blue</item>
+    </style>
 </resources>
