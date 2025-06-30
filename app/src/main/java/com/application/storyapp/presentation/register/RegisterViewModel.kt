@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.application.storyapp.Event
+import com.application.storyapp.utils.Event
 import com.application.storyapp.utils.ValidationUtils
 import com.application.storyapp.utils.RegisterUIState
 import com.application.storyapp.data.network.AuthRepository
@@ -19,7 +19,6 @@ class RegisterViewModel(
     private val _uiState = MutableLiveData(RegisterUIState())
     val uiState: LiveData<RegisterUIState> = _uiState
 
-    // FIX: Add Event-based LiveData for dialogs
     private val _errorEvent = MutableLiveData<Event<String>>()
     val errorEvent: LiveData<Event<String>> = _errorEvent
 
@@ -69,7 +68,6 @@ class RegisterViewModel(
                         isLoading = false,
                         isSuccess = true
                     )
-                    // FIX: Use Event to trigger dialog only once
                     _successEvent.value = Event(Unit)
                 }
                 is NetworkResult.Error -> {
@@ -77,26 +75,13 @@ class RegisterViewModel(
                         isLoading = false,
                         isSuccess = false
                     )
-                    // FIX: Use Event to trigger dialog only once
+
                     val errorMessage = result.message ?: "An unexpected error occurred"
                     _errorEvent.value = Event(errorMessage)
                 }
                 is NetworkResult.Loading -> {
-                    // Already handled above
                 }
             }
         }
-    }
-
-    fun clearErrors() {
-        _uiState.value = _uiState.value?.copy(
-            nameError = null,
-            emailError = null,
-            passwordError = null
-        )
-    }
-
-    fun resetAllStates() {
-        _uiState.value = RegisterUIState()
     }
 }

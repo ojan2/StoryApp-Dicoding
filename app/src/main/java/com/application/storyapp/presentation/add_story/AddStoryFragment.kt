@@ -1,4 +1,4 @@
-package com.application.storyapp.view
+package com.application.storyapp.presentation.add_story
 
 import android.app.Activity
 import android.content.Intent
@@ -19,17 +19,18 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.application.storyapp.presentation.add_story.AddStoryViewModel
 import com.application.storyapp.data.ViewModelFactory
 import com.application.storyapp.databinding.FragmentAddStoryBinding
 import com.application.storyapp.utils.AddStoryUIState
 import java.io.File
 import android.Manifest
+import android.annotation.SuppressLint
 import com.application.storyapp.utils.createCustomTempFile
 import com.application.storyapp.utils.reduceFileImage
 import com.application.storyapp.utils.uriToFile
 
 
+@Suppress("DEPRECATION")
 class AddStoryFragment : Fragment() {
 
     private var _binding: FragmentAddStoryBinding? = null
@@ -38,7 +39,6 @@ class AddStoryFragment : Fragment() {
     private lateinit var viewModel: AddStoryViewModel
     private var currentPhotoPath: String? = null
 
-    // Permission launcher
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
@@ -49,7 +49,6 @@ class AddStoryFragment : Fragment() {
         }
     }
 
-    // Camera launcher
     private val launcherIntentCamera = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -57,7 +56,7 @@ class AddStoryFragment : Fragment() {
             currentPhotoPath?.let { path ->
                 val file = File(path)
                 val bitmap = BitmapFactory.decodeFile(file.path)
-               // binding.ivPreview.setImageBitmap(bitmap)
+                binding.ivPreview.setImageBitmap(bitmap)
 
                 val reducedFile = reduceFileImage(file)
                 viewModel.setImageFile(reducedFile)
@@ -65,7 +64,7 @@ class AddStoryFragment : Fragment() {
         }
     }
 
-    // Gallery launcher
+
     private val launcherIntentGallery = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -73,7 +72,7 @@ class AddStoryFragment : Fragment() {
             val selectedImg = result.data?.data as Uri
             selectedImg.let { uri ->
                 val myFile = uriToFile(uri, requireContext())
-                //binding.ivPreview.setImageURI(uri)
+                binding.ivPreview.setImageURI(uri)
 
                 val reducedFile = reduceFileImage(myFile)
                 viewModel.setImageFile(reducedFile)
@@ -127,14 +126,13 @@ class AddStoryFragment : Fragment() {
     }
 
     private fun updateUI(state: AddStoryUIState) {
-        // Loading state
+
         binding.buttonAdd.isEnabled = !state.isLoading
         binding.progressBar.visibility = if (state.isLoading) View.VISIBLE else View.GONE
 
-        // Error states
+
         binding.tilDescription.error = state.descriptionError
 
-        // Image error
         if (state.imageError != null) {
             binding.tvImageError.text = state.imageError
             binding.tvImageError.visibility = View.VISIBLE
@@ -142,14 +140,13 @@ class AddStoryFragment : Fragment() {
             binding.tvImageError.visibility = View.GONE
         }
 
-        // Disable inputs while loading
         binding.edAddDescription.isEnabled = !state.isLoading
         binding.btnCamera.isEnabled = !state.isLoading
         binding.btnGallery.isEnabled = !state.isLoading
     }
 
     private fun setupListeners() {
-        // Description validation
+
         binding.edAddDescription.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 viewModel.validateDescription(s?.toString() ?: "")
@@ -158,17 +155,15 @@ class AddStoryFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
-        // Camera button
         binding.btnCamera.setOnClickListener {
             checkCameraPermission()
         }
 
-        // Gallery button
         binding.btnGallery.setOnClickListener {
             openGallery()
         }
 
-        // Upload button
+
         binding.buttonAdd.setOnClickListener {
             val description = binding.edAddDescription.text?.toString() ?: ""
             viewModel.uploadStory(description)
@@ -200,6 +195,7 @@ class AddStoryFragment : Fragment() {
             .show()
     }
 
+    @SuppressLint("QueryPermissionsNeeded")
     private fun openCamera() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         intent.resolveActivity(requireActivity().packageManager)
@@ -245,41 +241,42 @@ class AddStoryFragment : Fragment() {
     }
 
     private fun showSuccessDialog(message: String) {
+        parentFragmentManager.setFragmentResult(
+            "upload_result",
+            Bundle().apply { putBoolean("success", true) }
+        )
         AlertDialog.Builder(requireContext())
             .setTitle("Upload Successful")
             .setMessage(message)
             .setPositiveButton("OK") { dialog, _ ->
                 dialog.dismiss()
+
                 safeNavigateBack()
             }
             .setCancelable(false)
             .show()
     }
 
-    /**
-     * Safe navigation method that handles fragment lifecycle issues
-     */
+
     private fun safeNavigateBack() {
         try {
-            // Check if fragment is still attached and active
+
             if (isAdded && !isDetached && !isRemoving && view != null) {
-                // Try to navigate using NavController
+
                 findNavController().popBackStack()
             } else {
-                // Fallback: finish activity or use alternative navigation
+
                 activity?.onBackPressed()
             }
         } catch (e: IllegalStateException) {
-            // Handle case where NavController is not available
+
             try {
-                // Alternative: try to finish activity
+
                 activity?.onBackPressed()
             } catch (ex: Exception) {
-                // Last resort: just finish the activity
                 activity?.finish()
             }
         } catch (e: Exception) {
-            // Handle any other navigation exceptions
             activity?.onBackPressed()
         }
     }

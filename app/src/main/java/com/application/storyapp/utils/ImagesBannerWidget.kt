@@ -1,4 +1,4 @@
-package com.application.storyapp
+package com.application.storyapp.utils
 
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
@@ -10,8 +10,10 @@ import android.os.Build
 import android.widget.RemoteViews
 import android.widget.Toast
 import androidx.core.net.toUri
+import com.application.storyapp.R
 
 
+@Suppress("DEPRECATION")
 class ImagesBannerWidget : AppWidgetProvider() {
     companion object {
         private const val TOAST_ACTION = "com.application.storyapp.TOAST_ACTION"

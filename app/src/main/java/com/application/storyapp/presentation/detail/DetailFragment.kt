@@ -6,7 +6,6 @@ import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
@@ -18,8 +17,6 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import java.text.SimpleDateFormat
-import java.util.*
 
 class DetailFragment : Fragment() {
 
@@ -56,7 +53,6 @@ class DetailFragment : Fragment() {
 
     private fun setupUI() {
         binding.apply {
-            // Set transition names (harus sama dengan yang dikirim dari HomeFragment)
             ivPhoto.transitionName = "photo_big_${story.id}"
             tvName.transitionName = "name_${story.id}"
             tvDescription.transitionName = "description_${story.id}"

@@ -1,12 +1,11 @@
-package com.application.storyapp
+package com.application.storyapp.utils
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.util.Log
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
+import com.application.storyapp.R
 import com.application.storyapp.model.Story
 import com.bumptech.glide.Glide
 import com.google.gson.Gson

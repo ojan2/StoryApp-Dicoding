@@ -5,17 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.application.storyapp.data.StoryRepository
-import com.application.storyapp.utils.HomeUIState
-import com.application.storyapp.model.Story
 import com.application.storyapp.data.network.NetworkResult
+import com.application.storyapp.model.Story
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val storyRepository: StoryRepository
 ) : ViewModel() {
-
-    private val _uiState = MutableLiveData<HomeUIState>()
-    val uiState: LiveData<HomeUIState> = _uiState
 
     private val _stories = MutableLiveData<List<Story>>()
     val stories: LiveData<List<Story>> = _stories
@@ -37,18 +33,12 @@ class HomeViewModel(
 
             when (val result = storyRepository.getAllStories()) {
                 is NetworkResult.Success -> {
-                    val response = result.data
-                    _stories.value = response?.listStory ?: emptyList()
-                    _uiState.value = HomeUIState.Success
+                    _stories.value = result.data?.listStory.orEmpty()
                 }
-
                 is NetworkResult.Error -> {
                     _errorMessage.value = result.message
-                    _uiState.value = HomeUIState.Error(result.message)
                 }
-
-                is NetworkResult.Loading -> {
-                    _uiState.value = HomeUIState.Loading
+                else -> {
                 }
             }
 

@@ -1,6 +1,6 @@
 package com.application.storyapp.data.network
 
-import android.content.Context
+import android.annotation.SuppressLint
 import com.application.storyapp.data.data_store.UserPreferences
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -19,11 +19,9 @@ class ApiClient {
 
         @Volatile
         private var INSTANCE: ApiService? = null
+        @SuppressLint("StaticFieldLeak")
         private var userPreferences: UserPreferences? = null
 
-        fun initialize(context: Context) {
-            userPreferences = UserPreferences.getInstance(context)
-        }
 
         fun getApiService(): ApiService {
             return INSTANCE ?: synchronized(this) {

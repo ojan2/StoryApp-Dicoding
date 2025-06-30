@@ -1,4 +1,4 @@
-package com.application.storyapp
+package com.application.storyapp.presentation.splashscreen
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -29,14 +29,14 @@ class SplashFragment : Fragment() {
         userPreferences = UserPreferences.getInstance(requireContext())
 
         lifecycleScope.launch {
-            delay(1500) // kasih delay animasi splash kalau ada
+            delay(1500)
             userPreferences.isLoggedIn().collect { isLoggedIn ->
                 val destination = if (isLoggedIn) R.id.homeFragment else R.id.welcomeFragment
                 findNavController().navigate(
                     destination,
                     null,
                     NavOptions.Builder()
-                        .setPopUpTo(R.id.splashFragment, true) // supaya Splash nggak bisa diback
+                        .setPopUpTo(R.id.splashFragment, true)
                         .build()
                 )
             }

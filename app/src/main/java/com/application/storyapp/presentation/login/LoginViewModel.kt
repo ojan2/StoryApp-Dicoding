@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.application.storyapp.Event
+import com.application.storyapp.utils.Event
 import com.application.storyapp.utils.ValidationUtils
 import com.application.storyapp.utils.LoginResult
 import com.application.storyapp.utils.LoginUIState
@@ -19,7 +19,6 @@ class LoginViewModel(
     private val _uiState = MutableLiveData(LoginUIState())
     val uiState: LiveData<LoginUIState> = _uiState
 
-    // Event-based LiveData for dialogs and navigation
     private val _errorEvent = MutableLiveData<Event<String>>()
     val errorEvent: LiveData<Event<String>> = _errorEvent
 
@@ -73,7 +72,6 @@ class LoginViewModel(
                                 token = loginResult.token
                             )
                         )
-                        // Navigate to main after successful login
                         _navigateToMainEvent.value = Event(Unit)
                     }
                 }
@@ -86,28 +84,8 @@ class LoginViewModel(
                     _errorEvent.value = Event(errorMessage)
                 }
                 is NetworkResult.Loading -> {
-                    // Already handled above
                 }
             }
         }
-    }
-
-    fun logout() {
-        viewModelScope.launch {
-            repository.logout()
-        }
-    }
-
-    // Clear error states
-    fun clearErrors() {
-        _uiState.value = _uiState.value?.copy(
-            emailError = null,
-            passwordError = null
-        )
-    }
-
-    // Reset UI state
-    fun resetState() {
-        _uiState.value = LoginUIState()
     }
 }

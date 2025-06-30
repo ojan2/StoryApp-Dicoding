@@ -21,7 +21,11 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_addStoryFragment"
-            app:destination="@id/addStoryFragment" />
+            app:destination="@id/addStoryFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_to_right"/>
         <action
             android:id="@+id/action_homeFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
@@ -31,7 +35,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.application.storyapp.view.LoginFragment"
+        android:name="com.application.storyapp.presentation.login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -43,7 +47,7 @@
     </fragment>
     <fragment
         android:id="@+id/addStoryFragment"
-        android:name="com.application.storyapp.view.AddStoryFragment"
+        android:name="com.application.storyapp.presentation.add_story.AddStoryFragment"
         android:label="fragment_add_story"
         tools:layout="@layout/fragment_add_story" />
     <fragment
@@ -56,13 +60,8 @@
             app:argType="com.application.storyapp.model.Story" />
     </fragment>
     <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.application.storyapp.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
-    <fragment
         android:id="@+id/welcomeFragment"
-        android:name="com.application.storyapp.WelcomeFragment"
+        android:name="com.application.storyapp.presentation.welcome.WelcomeFragment"
         android:label="fragment_welcome"
         tools:layout="@layout/fragment_welcome" >
         <action
@@ -85,7 +84,7 @@
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.application.storyapp.SplashFragment"
+        android:name="com.application.storyapp.presentation.splashscreen.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action

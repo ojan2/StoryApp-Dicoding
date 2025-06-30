@@ -17942,10 +17942,10 @@ androidx.window.layout.WindowMetricsCalculatorCompat: android.graphics.Rect comp
 androidx.window.layout.WindowMetricsCalculatorCompat: android.graphics.Rect computeWindowBoundsP$window_release(android.app.Activity)
 androidx.window.layout.WindowMetricsCalculatorCompat: android.graphics.Rect computeWindowBoundsQ$window_release(android.app.Activity)
 androidx.window.layout.WindowMetricsCalculatorCompat: android.graphics.Point getRealSizeForDisplay$window_release(android.view.Display)
-com.application.storyapp.ImagesBannerWidget: ImagesBannerWidget()
-com.application.storyapp.MainActivity: MainActivity()
-com.application.storyapp.MainActivity$$ExternalSyntheticLambda0: MainActivity$$ExternalSyntheticLambda0()
-com.application.storyapp.StackWidgetService: StackWidgetService()
+com.application.storyapp.utils.ImagesBannerWidget: ImagesBannerWidget()
+com.application.storyapp.presentation.MainActivity: MainActivity()
+com.application.storyapp.presentation.MainActivity$$ExternalSyntheticLambda0: MainActivity$$ExternalSyntheticLambda0()
+com.application.storyapp.utils.StackWidgetService: StackWidgetService()
 com.application.storyapp.data.network.ApiClient: ApiClient()
 com.application.storyapp.data.network.ApiClient$Companion$AuthInterceptor: ApiClient$Companion$AuthInterceptor()
 com.application.storyapp.data.network.ApiService
@@ -17970,14 +17970,14 @@ com.application.storyapp.presentation.register.RegisterFragment$$ExternalSynthet
 com.application.storyapp.utils.AddStoryUIState: AddStoryUIState()
 com.application.storyapp.utils.LoginUIState: LoginUIState()
 com.application.storyapp.utils.RegisterUIState: RegisterUIState()
-com.application.storyapp.view.AddStoryFragment
-com.application.storyapp.view.AddStoryFragment: AddStoryFragment()
-com.application.storyapp.view.AddStoryFragment$$ExternalSyntheticLambda10: AddStoryFragment$$ExternalSyntheticLambda10()
-com.application.storyapp.view.AddStoryFragment$$ExternalSyntheticLambda8: AddStoryFragment$$ExternalSyntheticLambda8()
-com.application.storyapp.view.LoginFragment
-com.application.storyapp.view.LoginFragment: LoginFragment()
-com.application.storyapp.view.LoginFragment$$ExternalSyntheticLambda0: LoginFragment$$ExternalSyntheticLambda0()
-com.application.storyapp.view.LoginFragment$$ExternalSyntheticLambda5: LoginFragment$$ExternalSyntheticLambda5()
+com.application.storyapp.presentation.add_story.AddStoryFragment
+com.application.storyapp.presentation.add_story.AddStoryFragment: AddStoryFragment()
+com.application.storyapp.presentation.add_story.AddStoryFragment$$ExternalSyntheticLambda10: AddStoryFragment$$ExternalSyntheticLambda10()
+com.application.storyapp.presentation.add_story.AddStoryFragment$$ExternalSyntheticLambda8: AddStoryFragment$$ExternalSyntheticLambda8()
+com.application.storyapp.presentation.login.LoginFragment
+com.application.storyapp.presentation.login.LoginFragment: LoginFragment()
+com.application.storyapp.presentation.login.LoginFragment$$ExternalSyntheticLambda0: LoginFragment$$ExternalSyntheticLambda0()
+com.application.storyapp.presentation.login.LoginFragment$$ExternalSyntheticLambda5: LoginFragment$$ExternalSyntheticLambda5()
 com.bumptech.glide.GeneratedAppGlideModule
 com.bumptech.glide.GeneratedAppGlideModule: GeneratedAppGlideModule()
 com.bumptech.glide.GenericTransitionOptions: GenericTransitionOptions()

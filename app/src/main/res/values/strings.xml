@@ -27,5 +27,13 @@
     <string name="image_welcome">Gambar Selamat Datang</string>
     <string name="dicoding">Dicoding Story</string>
     <string name="Logout">Keluar</string>
-
+    <string name="confim_logout">Konfirmasi Keluar</string>
+    <string name="message_exit">Apakah Anda yakin ingin keluar dari aplikasi?</string>
+    <string name="yes">Ya</string>
+    <string name="cancel">Batal</string>
+    <string name="welcome_title">Selamat datang di Dicoding Story!</string>
+    <string name="welcome_description">
+        Mau berbagi ilmu tentang Android, iOS, Machine Learning, Cloud, Front-End, Back-End, dan bidang IT lainnya? Di Dicoding Story aja!
+    </string>
+    <string name="story_name">Nama </string>
 </resources>

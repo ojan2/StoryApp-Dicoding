@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin")
-    id ("dexguard")
 }
 
 android {
@@ -14,8 +13,8 @@ android {
         applicationId = "com.rmldemo.guardsquare"
         minSdk = 24
         targetSdk = 35
-        versionCode = 9101
-        versionName = "9.10.1-overlays"
+        versionCode = 10
+        versionName = "App Story"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -69,15 +68,5 @@ dependencies {
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
     implementation("com.airbnb.android:lottie:6.3.0")
-
-}
-dexguard {
-    path = "/Users/muhammad.alfauzan/Development/DexGuard/DexGuard-9.10.1/"
-    configurations {
-        register("release") {
-            defaultConfigurations("dexguard-release-aggressive.pro")
-            defaultConfigurations("dexguard-rasp.pro")
-            configurations("dexguard-project.txt")
-        }
-    }
+    implementation( "androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-beta01")
 }

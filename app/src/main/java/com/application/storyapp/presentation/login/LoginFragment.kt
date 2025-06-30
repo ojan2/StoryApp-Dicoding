@@ -1,5 +1,7 @@
-package com.application.storyapp.view
+package com.application.storyapp.presentation.login
 
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
@@ -13,7 +15,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
-import com.application.storyapp.presentation.login.LoginViewModel
 import com.application.storyapp.R
 import com.application.storyapp.data.ViewModelFactory
 import com.application.storyapp.databinding.FragmentLoginBinding
@@ -42,6 +43,7 @@ class LoginFragment : Fragment() {
         setupViewModel()
         setupObservers()
         setupListeners()
+        startImageAnimation()
     }
 
     private fun setupViewModel() {
@@ -54,7 +56,6 @@ class LoginFragment : Fragment() {
             updateUI(state)
         }
 
-        // Event-based approach for dialogs
         viewModel.errorEvent.observe(viewLifecycleOwner) { event ->
             event.getContentIfNotHandled()?.let { message ->
                 showErrorDialog(message)
@@ -79,21 +80,19 @@ class LoginFragment : Fragment() {
     }
 
     private fun updateUI(state: LoginUIState) {
-        // Loading state
+
         binding.btnLogin.isEnabled = !state.isLoading
         binding.progressBar.visibility = if (state.isLoading) View.VISIBLE else View.GONE
 
-        // Error states for input fields
         binding.textInputLayout.error = state.emailError
         binding.textInputLayout2.error = state.passwordError
 
-        // Disable input fields while loading
         binding.edEmail.isEnabled = !state.isLoading
         binding.edPassword.isEnabled = !state.isLoading
     }
 
     private fun setupListeners() {
-        // Email validation
+
         binding.edEmail.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 viewModel.validateEmail(s?.toString() ?: "")
@@ -103,7 +102,6 @@ class LoginFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
-        // Password validation
         binding.edPassword.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 viewModel.validatePassword(s?.toString() ?: "")
@@ -113,17 +111,13 @@ class LoginFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
-        // Login button click
+
         binding.btnLogin.setOnClickListener {
             val email = binding.edEmail.text?.toString() ?: ""
             val password = binding.edPassword.text?.toString() ?: ""
             viewModel.login(email, password)
         }
 
-        // Navigate to register (if you have this button)
-//        binding.tvRegister?.setOnClickListener {
-//            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
-//        }
     }
 
     private fun showErrorDialog(message: String) {
@@ -147,7 +141,6 @@ class LoginFragment : Fragment() {
                     R.id.action_loginFragment_to_homeFragment,
                     null,
                     navOptions {
-                        // Hapus semua fragment sebelumnya sampai splash
                         popUpTo(R.id.splashFragment) {
                             inclusive = true
                         }
@@ -158,15 +151,14 @@ class LoginFragment : Fragment() {
             .show()
     }
 
-
-
-//    private fun navigateToMainActivity() {
-//        // Navigate to MainActivity or Main Screen
-//        val intent = Intent(requireContext(), MainActivity::class.java)
-//        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//        startActivity(intent)
-//        requireActivity().finish()
-//    }
+    private fun startImageAnimation() {
+        ObjectAnimator.ofFloat(binding.imageView, "translationX", -40f, 40f).apply {
+            duration = 8000L
+            repeatCount = ValueAnimator.INFINITE
+            repeatMode = ValueAnimator.REVERSE
+            start()
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -14,7 +16,7 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.application.storyapp.ImagesBannerWidget
+import com.application.storyapp.utils.ImagesBannerWidget
 import com.application.storyapp.R
 import com.application.storyapp.data.ViewModelFactory
 import com.application.storyapp.data.data_store.UserPreferences
@@ -30,6 +32,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var viewModel: HomeViewModel
     private lateinit var userPreferences: UserPreferences
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,17 +44,30 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         setupViewModel()
         setupRecyclerView()
         observeViewModel()
         handleBackPressed()
+
+        parentFragmentManager.setFragmentResultListener("upload_result", viewLifecycleOwner) { _, result ->
+            val success = result.getBoolean("success", false)
+            if (success) {
+                viewModel.loadStories()
+            }
+        }
         userPreferences = UserPreferences.getInstance(requireContext())
 
         binding.btnLogout.setOnClickListener {
-           setupLogout()
+            logout()
         }
+
         binding.btnAddStory.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_addStoryFragment)
+        }
+
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.loadStories()
         }
     }
 
@@ -68,16 +84,15 @@ class HomeFragment : Fragment() {
         viewModel.stories.observe(viewLifecycleOwner) { list ->
             if (!list.isNullOrEmpty()) {
                 val json = Gson().toJson(list)
-                requireContext().getSharedPreferences("widget_prefs", Context.MODE_PRIVATE)
-                    .edit()
-                    .putString("stories", json)
-                    .apply()
+                requireContext().getSharedPreferences("widget_prefs", Context.MODE_PRIVATE).edit {
+                    putString("stories", json)
+                }
                 ImagesBannerWidget.updateWidget(requireContext())
             }
+
             binding.rvStory.adapter = StoryAdapter(list) { story, imgView, nameView, descView ->
                 navigateToDetailWithTransition(story, imgView, nameView, descView)
             }
-
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner) { message ->
@@ -88,6 +103,7 @@ class HomeFragment : Fragment() {
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+            binding.swipeRefresh.isRefreshing = isLoading
         }
     }
 
@@ -107,23 +123,29 @@ class HomeFragment : Fragment() {
 
         findNavController().navigate(action, extras)
     }
-    private fun setupLogout() {
-        binding.btnLogout.setOnClickListener {
-            lifecycleScope.launch {
-                userPreferences.clearAuthData()
-
-                findNavController().navigate(
-                    R.id.loginFragment,
-                    null,
-                    navOptions {
-                        popUpTo(R.id.navigation_menu) {
-                            inclusive = true // Clear seluruh backstack
+    private fun logout() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.confim_logout)
+            .setMessage(R.string.message_exit)
+            .setPositiveButton(R.string.yes) { _, _ ->
+                lifecycleScope.launch {
+                    userPreferences.clearAuthData()
+                    findNavController().navigate(
+                        R.id.loginFragment,
+                        null,
+                        navOptions {
+                            popUpTo(R.id.navigation_menu) {
+                                inclusive = true
+                            }
+                            launchSingleTop = true
                         }
-                        launchSingleTop = true
-                    }
-                )
+                    )
+                }
             }
-        }
+            .setNegativeButton(R.string.cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
     private fun handleBackPressed() {

@@ -13421,15 +13421,15 @@ androidx.window.layout.WindowMetricsCalculatorCompat:
     72:82:public androidx.window.layout.WindowMetrics computeMaximumWindowMetrics(android.app.Activity)
     274:284:public final android.graphics.Rect computeWindowBoundsIceCreamSandwich$window_release(android.app.Activity)
 androidx.window.layout.WindowMetricsCalculatorDecorator
-com.application.storyapp.Event:
+com.application.storyapp.utils.Event:
     15:15:public final java.lang.Object peekContent()
-com.application.storyapp.ImagesBannerWidget:
+com.application.storyapp.utils.ImagesBannerWidget:
     public static final java.lang.String EXTRA_ITEM
     public static final java.lang.String EXTRA_STORY_ID
     public static final java.lang.String EXTRA_STORY_NAME
     private static final java.lang.String REFRESH_ACTION
     private static final java.lang.String TOAST_ACTION
-com.application.storyapp.ImagesBannerWidget$Companion:
+com.application.storyapp.utils.ImagesBannerWidget$Companion:
     75:79:public final void updateWidget(android.content.Context)
 com.application.storyapp.R:
     private R()

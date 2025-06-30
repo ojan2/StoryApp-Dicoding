@@ -1,5 +1,7 @@
 package com.application.storyapp.presentation.register
 
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.app.AlertDialog
 import android.os.Bundle
 import android.text.Editable
@@ -37,6 +39,7 @@ class RegisterFragment : Fragment() {
         setupViewModel()
         setupObservers()
         setupListeners()
+        startImageAnimation()
     }
 
     private fun setupViewModel() {
@@ -49,7 +52,7 @@ class RegisterFragment : Fragment() {
             updateUI(state)
         }
 
-        // FIX: Use Event-based approach for dialogs
+
         viewModel.errorEvent.observe(viewLifecycleOwner) { event ->
             event.getContentIfNotHandled()?.let { message ->
                 showErrorDialog(message)
@@ -64,11 +67,9 @@ class RegisterFragment : Fragment() {
     }
 
     private fun updateUI(state: RegisterUIState) {
-        // Loading state
         binding.btnRegister.isEnabled = !state.isLoading
         binding.progressBar.visibility = if (state.isLoading) View.VISIBLE else View.GONE
 
-        // Error states for input fields
         binding.tilRegisterName.error = state.nameError
         binding.tilRegisterEmail.error = state.emailError
         binding.tilRegisterPassword.error = state.passwordError
@@ -128,7 +129,14 @@ class RegisterFragment : Fragment() {
             .setCancelable(false)
             .show()
     }
-
+    private fun startImageAnimation() {
+        ObjectAnimator.ofFloat(binding.imageView3, "translationX", -40f, 40f).apply {
+            duration = 8000L
+            repeatCount = ValueAnimator.INFINITE
+            repeatMode = ValueAnimator.REVERSE
+            start()
+        }
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.application.storyapp.Event
+import com.application.storyapp.utils.Event
 import com.application.storyapp.data.StoryRepository
 import com.application.storyapp.utils.AddStoryUIState
 import com.application.storyapp.data.network.NetworkResult
@@ -19,7 +19,6 @@ class AddStoryViewModel(
     private val _uiState = MutableLiveData(AddStoryUIState())
     val uiState: LiveData<AddStoryUIState> = _uiState
 
-    // Event-based LiveData for dialogs and navigation
     private val _errorEvent = MutableLiveData<Event<String>>()
     val errorEvent: LiveData<Event<String>> = _errorEvent
 
@@ -29,7 +28,6 @@ class AddStoryViewModel(
     private val _navigateBackEvent = MutableLiveData<Event<Unit>>()
     val navigateBackEvent: LiveData<Event<Unit>> = _navigateBackEvent
 
-    // Current selected image
     private var currentImageFile: File? = null
 
     fun setImageFile(file: File) {
@@ -91,27 +89,10 @@ class AddStoryViewModel(
                         _errorEvent.value = Event(errorMessage)
                     }
                     is NetworkResult.Loading -> {
-                        // Already handled above
                     }
                 }
             }
         }
     }
-
-    // Clear error states
-    fun clearErrors() {
-        _uiState.value = _uiState.value?.copy(
-            descriptionError = null,
-            imageError = null
-        )
-    }
-
-    // Reset UI state
-    fun resetState() {
-        _uiState.value = AddStoryUIState()
-        currentImageFile = null
-    }
-
-    fun getCurrentImageFile(): File? = currentImageFile
 }
 

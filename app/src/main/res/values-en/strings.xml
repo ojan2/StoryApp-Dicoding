@@ -27,4 +27,13 @@
     <string name="image_welcome">Image Welcome</string>
     <string name="dicoding">Dicoding Story</string>
     <string name="Logout">Logout</string>
+    <string name="confim_logout">Confirm Exit</string>
+    <string name="message_exit">Are you sure you want to exit the app?</string>
+    <string name="yes">Yes</string>
+    <string name="cancel">Cancel</string>
+    <string name="welcome_title">Welcome to Dicoding Story!</string>
+    <string name="welcome_description">
+        Want to share knowledge about Android, iOS, Machine Learning, Cloud, Front-End, Back-End, and other IT fields? Do it on Dicoding Story!
+    </string>
+    <string name="story_name">Name </string>
 </resources>

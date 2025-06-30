@@ -1,4 +1,4 @@
-package com.application.storyapp
+package com.application.storyapp.utils
 
 class Event<out T>(private val content: T) {
     private var hasBeenHandled = false
@@ -12,5 +12,4 @@ class Event<out T>(private val content: T) {
         }
     }
 
-    fun peekContent(): T = content
 }

@@ -8,7 +8,6 @@ pluginManagement {
             }
         }
 
-        maven (url= "/Users/muhammad.alfauzan/Development/DexGuard/DexGuard-9.10.5/lib")
         mavenCentral()
         gradlePluginPortal()
     }

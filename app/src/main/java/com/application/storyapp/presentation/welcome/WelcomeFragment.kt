@@ -1,4 +1,4 @@
-package com.application.storyapp
+package com.application.storyapp.presentation.welcome
 
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
@@ -7,13 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
-import com.application.storyapp.data.data_store.UserPreferences
+import com.application.storyapp.R
 import com.application.storyapp.databinding.FragmentWelcomeBinding
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 
 class WelcomeFragment : Fragment() {
 
