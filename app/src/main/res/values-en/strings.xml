@@ -36,4 +36,9 @@
         Want to share knowledge about Android, iOS, Machine Learning, Cloud, Front-End, Back-End, and other IT fields? Do it on Dicoding Story!
     </string>
     <string name="story_name">Name </string>
+    <string name="error_pass">Password cannot be empty </string>
+    <string name="error_pass_long">Passwords must be at least 8 characters long </string>
+    <string name="error_email">Email cannot be empty</string>
+    <string name="error_email_valid">Email must be active and valid</string>
+    <string name="error_username">Username cannot be empty </string>
 </resources>

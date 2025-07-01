@@ -36,4 +36,9 @@
         Mau berbagi ilmu tentang Android, iOS, Machine Learning, Cloud, Front-End, Back-End, dan bidang IT lainnya? Di Dicoding Story aja!
     </string>
     <string name="story_name">Nama </string>
+    <string name="error_pass">Password tidak boleh kosong </string>
+    <string name="error_pass_long">Panjang Kata Sandi Harus Minimal 8 Karakter </string>
+    <string name="error_email">Email tidak boleh kosong </string>
+    <string name="error_email_valid">Email harus aktif dan valid </string>
+    <string name="error_username">Username tidak boleh kosong </string>
 </resources>

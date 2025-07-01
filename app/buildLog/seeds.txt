@@ -17942,10 +17942,10 @@ androidx.window.layout.WindowMetricsCalculatorCompat: android.graphics.Rect comp
 androidx.window.layout.WindowMetricsCalculatorCompat: android.graphics.Rect computeWindowBoundsP$window_release(android.app.Activity)
 androidx.window.layout.WindowMetricsCalculatorCompat: android.graphics.Rect computeWindowBoundsQ$window_release(android.app.Activity)
 androidx.window.layout.WindowMetricsCalculatorCompat: android.graphics.Point getRealSizeForDisplay$window_release(android.view.Display)
-com.application.storyapp.utils.ImagesBannerWidget: ImagesBannerWidget()
+com.application.storyapp.presentation.widget.ImagesBannerWidget: ImagesBannerWidget()
 com.application.storyapp.presentation.MainActivity: MainActivity()
 com.application.storyapp.presentation.MainActivity$$ExternalSyntheticLambda0: MainActivity$$ExternalSyntheticLambda0()
-com.application.storyapp.utils.StackWidgetService: StackWidgetService()
+com.application.storyapp.presentation.widget.StackWidgetService: StackWidgetService()
 com.application.storyapp.data.network.ApiClient: ApiClient()
 com.application.storyapp.data.network.ApiClient$Companion$AuthInterceptor: ApiClient$Companion$AuthInterceptor()
 com.application.storyapp.data.network.ApiService

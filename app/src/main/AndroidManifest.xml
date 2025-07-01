@@ -38,7 +38,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths"/>
         </provider>
-        <receiver android:name=".utils.ImagesBannerWidget"
+        <receiver android:name=".presentation.widget.ImagesBannerWidget"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -50,7 +50,7 @@
         </receiver>
 
         <service
-            android:name=".utils.StackWidgetService"
+            android:name=".presentation.widget.StackWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
     </application>

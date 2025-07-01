@@ -16,7 +16,7 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.application.storyapp.utils.ImagesBannerWidget
+import com.application.storyapp.presentation.widget.ImagesBannerWidget
 import com.application.storyapp.R
 import com.application.storyapp.data.ViewModelFactory
 import com.application.storyapp.data.data_store.UserPreferences
