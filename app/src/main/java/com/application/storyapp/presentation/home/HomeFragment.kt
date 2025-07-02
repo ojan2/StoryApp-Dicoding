@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.application.storyapp.presentation.widget.ImagesBannerWidget
 import com.application.storyapp.R
@@ -23,6 +24,7 @@ import com.application.storyapp.data.data_store.UserPreferences
 import com.application.storyapp.databinding.FragmentHomeBinding
 import com.application.storyapp.model.Story
 import com.google.gson.Gson
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
@@ -32,6 +34,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var viewModel: HomeViewModel
     private lateinit var userPreferences: UserPreferences
+    private lateinit var storyAdapter: StoryAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,12 +53,6 @@ class HomeFragment : Fragment() {
         observeViewModel()
         handleBackPressed()
 
-        parentFragmentManager.setFragmentResultListener("upload_result", viewLifecycleOwner) { _, result ->
-            val success = result.getBoolean("success", false)
-            if (success) {
-                viewModel.loadStories()
-            }
-        }
         userPreferences = UserPreferences.getInstance(requireContext())
 
         binding.btnLogout.setOnClickListener {
@@ -67,7 +64,8 @@ class HomeFragment : Fragment() {
         }
 
         binding.swipeRefresh.setOnRefreshListener {
-            viewModel.loadStories()
+            storyAdapter.refresh()
+            binding.swipeRefresh.isRefreshing = false
         }
     }
 
@@ -77,33 +75,37 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        binding.rvStory.layoutManager = LinearLayoutManager(requireContext())
+        storyAdapter = StoryAdapter { story, imgView, nameView, descView ->
+            navigateToDetailWithTransition(story, imgView, nameView, descView)
+        }
+
+        binding.rvStory.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = storyAdapter.withLoadStateFooter(
+                footer = LoadingStateAdapter { storyAdapter.retry() }
+            )
+        }
     }
 
+
     private fun observeViewModel() {
-        viewModel.stories.observe(viewLifecycleOwner) { list ->
-            if (!list.isNullOrEmpty()) {
-                val json = Gson().toJson(list)
-                requireContext().getSharedPreferences("widget_prefs", Context.MODE_PRIVATE).edit {
-                    putString("stories", json)
-                }
-                ImagesBannerWidget.updateWidget(requireContext())
-            }
-
-            binding.rvStory.adapter = StoryAdapter(list) { story, imgView, nameView, descView ->
-                navigateToDetailWithTransition(story, imgView, nameView, descView)
+        lifecycleScope.launchWhenStarted {
+            viewModel.stories.collectLatest { pagingData ->
+                storyAdapter.submitData(pagingData)
             }
         }
 
-        viewModel.errorMessage.observe(viewLifecycleOwner) { message ->
-            message?.let {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-            }
-        }
+        storyAdapter.addLoadStateListener { loadState ->
+            binding.progressBar.visibility =
+                if (loadState.source.refresh is LoadState.Loading) View.VISIBLE else View.GONE
 
-        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-            binding.swipeRefresh.isRefreshing = isLoading
+            val errorState = loadState.source.append as? LoadState.Error
+                ?: loadState.source.prepend as? LoadState.Error
+                ?: loadState.refresh as? LoadState.Error
+
+            errorState?.let {
+                Toast.makeText(requireContext(), "Error: ${it.error.message}", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -123,6 +125,7 @@ class HomeFragment : Fragment() {
 
         findNavController().navigate(action, extras)
     }
+
     private fun logout() {
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.confim_logout)
@@ -130,11 +133,12 @@ class HomeFragment : Fragment() {
             .setPositiveButton(R.string.yes) { _, _ ->
                 lifecycleScope.launch {
                     userPreferences.clearAuthData()
+                    // Clear stack and go to login
                     findNavController().navigate(
                         R.id.loginFragment,
                         null,
                         navOptions {
-                            popUpTo(R.id.navigation_menu) {
+                            popUpTo(R.id.splashFragment) {
                                 inclusive = true
                             }
                             launchSingleTop = true
@@ -163,3 +167,4 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 }
+

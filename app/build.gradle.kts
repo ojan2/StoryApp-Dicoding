@@ -69,4 +69,6 @@ dependencies {
 
     implementation("com.airbnb.android:lottie:6.3.0")
     implementation( "androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-beta01")
+
+    implementation ("androidx.paging:paging-runtime-ktx:3.3.6")
 }
