@@ -10,7 +10,7 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.rmldemo.guardsquare"
+        applicationId = "com.application.storyapp"
         minSdk = 24
         targetSdk = 35
         versionCode = 10
@@ -31,11 +31,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
 }
 
@@ -71,4 +71,28 @@ dependencies {
     implementation( "androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-beta01")
 
     implementation ("androidx.paging:paging-runtime-ktx:3.3.6")
+
+    implementation ("com.google.android.gms:play-services-maps:19.2.0")
+    implementation ("com.google.android.gms:play-services-location:21.3.0")
+
+    implementation("androidx.core:core-splashscreen:1.0.1")
+
+    // testing
+    testImplementation ("junit:junit:4.13.2")
+    testImplementation ("org.mockito:mockito-core:4.5.1")
+    testImplementation ("org.mockito:mockito-inline:3.12.4")
+    testImplementation ("org.mockito.kotlin:mockito-kotlin:4.0.0")
+    testImplementation ("androidx.arch.core:core-testing:2.2.0")
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+    testImplementation( "androidx.arch.core:core-testing:2.2.0")
+
+// Untuk unit test biasa
+    testImplementation ("io.mockk:mockk:1.13.5")
+
+// Untuk test coroutine
+    // Untuk log SLF4J selama unit test
+    testImplementation ("org.slf4j:slf4j-simple:2.0.9")
+    testImplementation(kotlin("test"))
+
+
 }

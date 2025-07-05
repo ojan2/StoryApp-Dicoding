@@ -141,7 +141,7 @@ class LoginFragment : Fragment() {
                     R.id.action_loginFragment_to_homeFragment,
                     null,
                     navOptions {
-                        popUpTo(R.id.splashFragment) {
+                        popUpTo(R.id.welcomeFragment) {
                             inclusive = true
                         }
                     }

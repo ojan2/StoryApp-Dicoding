@@ -13635,7 +13635,7 @@ com.application.storyapp.presentation.home.HomeFragmentDirections$ActionHomeFrag
     16:16:public final com.application.storyapp.model.Story getStory()
 com.application.storyapp.presentation.home.HomeFragmentDirections$Companion:
     38:38:public final androidx.navigation.NavDirections actionHomeFragmentToAddStoryFragment()
-com.application.storyapp.presentation.home.HomeViewModel:
+com.application.storyapp.presentation.home.com.application.storyapp.presentation.home.HomeViewModel:
     18:18:public final androidx.lifecycle.LiveData getUiState()
 com.application.storyapp.presentation.login.LoginViewModel:
     103:103:public final void clearErrors()

@@ -1,16 +1,16 @@
 package com.application.storyapp.presentation.add_story
 
+import android.location.Location
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.application.storyapp.utils.Event
 import com.application.storyapp.data.StoryRepository
-import com.application.storyapp.utils.AddStoryUIState
 import com.application.storyapp.data.network.NetworkResult
+import com.application.storyapp.utils.AddStoryUIState
+import com.application.storyapp.utils.Event
 import kotlinx.coroutines.launch
 import java.io.File
-
 
 class AddStoryViewModel(
     private val repository: StoryRepository
@@ -28,6 +28,8 @@ class AddStoryViewModel(
     private val _navigateBackEvent = MutableLiveData<Event<Unit>>()
     val navigateBackEvent: LiveData<Event<Unit>> = _navigateBackEvent
 
+    private var currentLocation: Location? = null
+
     private var currentImageFile: File? = null
 
     fun setImageFile(file: File) {
@@ -38,6 +40,9 @@ class AddStoryViewModel(
         )
     }
 
+    fun setLocation(location: Location?) {
+        currentLocation = location
+    }
     fun validateDescription(description: String) {
         val error = if (description.isBlank()) {
             "Description cannot be empty"
@@ -47,7 +52,6 @@ class AddStoryViewModel(
     }
 
     fun uploadStory(description: String, lat: Float? = null, lon: Float? = null) {
-        // Validate inputs
         val descriptionError = if (description.isBlank()) "Description cannot be empty" else null
         val imageError = if (currentImageFile == null) "Please select an image" else null
 
@@ -65,9 +69,12 @@ class AddStoryViewModel(
             imageError = null
         )
 
+        val finalLat = lat ?: currentLocation?.latitude?.toFloat()
+        val finalLon = lon ?: currentLocation?.longitude?.toFloat()
+
         viewModelScope.launch {
             currentImageFile?.let { file ->
-                when (val result = repository.uploadStory(file, description, lat, lon)) {
+                when (val result = repository.uploadStory(file, description, finalLat, finalLon)) {
                     is NetworkResult.Success -> {
                         _uiState.value = _uiState.value?.copy(
                             isLoading = false,
@@ -76,8 +83,6 @@ class AddStoryViewModel(
 
                         val message = result.data?.message ?: "Story uploaded successfully!"
                         _successEvent.value = Event(message)
-
-                        // Navigate back after successful upload
                         _navigateBackEvent.value = Event(Unit)
                     }
                     is NetworkResult.Error -> {
@@ -95,4 +100,3 @@ class AddStoryViewModel(
         }
     }
 }
-

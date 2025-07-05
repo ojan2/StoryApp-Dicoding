@@ -16,7 +16,6 @@ class StoryAdapter(
 
     inner class StoryViewHolder(private val binding: ItemStoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
         fun bind(story: Story) {
             binding.apply {
                 tvName.text = story.name

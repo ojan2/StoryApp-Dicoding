@@ -4,7 +4,7 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.rmldemo.guardsquare",
+  "applicationId": "com.application.storyapp",
   "variantName": "release",
   "elements": [
     {

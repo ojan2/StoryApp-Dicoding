@@ -1,26 +1,49 @@
 package com.application.storyapp.presentation.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.application.storyapp.data.StoryRepository
-import com.application.storyapp.data.network.NetworkResult
-import com.application.storyapp.data.paging.StoryPagingSource
 import com.application.storyapp.model.Story
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val storyRepository: StoryRepository
+    private val repository: StoryRepository
 ) : ViewModel() {
 
-    val stories: Flow<PagingData<Story>> = storyRepository
-        .getStoriesPagingData()
-        .cachedIn(viewModelScope)
-}
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
 
+    private val _pagingDataFlow = MutableStateFlow<PagingData<Story>>(PagingData.empty())
+    val stories: Flow<PagingData<Story>> = _pagingDataFlow
+
+    init {
+        loadStories()
+    }
+
+    fun refresh() {
+        loadStories()
+    }
+
+    private fun loadStories() {
+        _isRefreshing.value = true
+        viewModelScope.launch {
+            try {
+                repository.getStoriesPagingData()
+                    .cachedIn(viewModelScope)
+                    .collect { pagingData ->
+                        _pagingDataFlow.value = pagingData
+                        _isRefreshing.value = false
+                    }
+            } catch (e: Exception) {
+                _isRefreshing.value = false
+
+            }
+        }
+    }
+}

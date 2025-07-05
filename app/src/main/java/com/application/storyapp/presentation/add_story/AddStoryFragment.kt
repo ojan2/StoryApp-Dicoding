@@ -25,9 +25,13 @@ import com.application.storyapp.utils.AddStoryUIState
 import java.io.File
 import android.Manifest
 import android.annotation.SuppressLint
+import android.location.Location
+import android.util.Log
 import com.application.storyapp.utils.createCustomTempFile
 import com.application.storyapp.utils.reduceFileImage
 import com.application.storyapp.utils.uriToFile
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 
 
 @Suppress("DEPRECATION")
@@ -38,6 +42,7 @@ class AddStoryFragment : Fragment() {
 
     private lateinit var viewModel: AddStoryViewModel
     private var currentPhotoPath: String? = null
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -46,6 +51,15 @@ class AddStoryFragment : Fragment() {
             showImageSourceDialog()
         } else {
             showPermissionDeniedDialog()
+        }
+    }
+    private val requestLocationPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            getLocation()
+        } else {
+            Log.w("AddStoryFragment", "Location permission denied")
         }
     }
 
@@ -64,6 +78,28 @@ class AddStoryFragment : Fragment() {
         }
     }
 
+    private fun getLocation() {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            fusedLocationClient.lastLocation
+                .addOnSuccessListener { location: Location? ->
+                    if (location != null) {
+                        viewModel.setLocation(location)
+                        Log.d("AddStoryFragment", "Location: ${location.latitude}, ${location.longitude}")
+                    } else {
+                        Log.w("AddStoryFragment", "Location is null, trying again...")
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.e("AddStoryFragment", "Failed to get location: ${exception.localizedMessage}")
+                }
+        } else {
+            requestLocationPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+        }
+    }
 
     private val launcherIntentGallery = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -94,6 +130,10 @@ class AddStoryFragment : Fragment() {
         setupViewModel()
         setupObservers()
         setupListeners()
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        getLocation()
+
     }
 
     private fun setupViewModel() {
@@ -280,6 +320,8 @@ class AddStoryFragment : Fragment() {
             activity?.onBackPressed()
         }
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()

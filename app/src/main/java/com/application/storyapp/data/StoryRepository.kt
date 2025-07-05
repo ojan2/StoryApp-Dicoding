@@ -82,7 +82,7 @@ class StoryRepository private constructor(
             config = PagingConfig(
                 pageSize = Constants.PAGE_SIZE,
                 enablePlaceholders = false,
-                prefetchDistance = Constants.PAGE_SIZE / 2 // agar tidak langsung fetch halaman berikutnya
+                prefetchDistance = Constants.PAGE_SIZE / 2
             ),
             pagingSourceFactory = {
                 StoryPagingSource(this)
@@ -90,20 +90,16 @@ class StoryRepository private constructor(
         ).flow
     }
 
-    suspend fun getStories(page: Int, size: Int): NetworkResult<GetAllStoriesResponse> {
+    suspend fun getStories(page: Int, size: Int, location: Int = 0): NetworkResult<GetAllStoriesResponse> {
         val token = userPreferences.getAuthToken().firstOrNull()
             ?: return NetworkResult.Error("Authentication token not found. Please login again.")
         return try {
-            val response = apiService.getStories("Bearer $token", page, size)
+            val response = apiService.getStories("Bearer $token", page, size, location)
             if (response.error) NetworkResult.Error(response.message)
             else NetworkResult.Success(response)
         } catch (e: Exception) {
             handleException(e)
         }
-    }
-
-    private suspend fun getToken(): String? {
-        return userPreferences.getAuthToken().first()
     }
 
     private fun <T> handleException(e: Exception): NetworkResult<T> {

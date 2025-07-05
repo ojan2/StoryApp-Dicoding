@@ -23,7 +23,6 @@ class StoryPagingSource(
         return try {
             val page = params.key ?: Constants.INITIAL_PAGE_INDEX
 
-            // Delay buatan agar loading state terlihat meski internet cepat
             delay(1000)
 
             when (val result = storyRepository.getStories(page, Constants.PAGE_SIZE)) {
