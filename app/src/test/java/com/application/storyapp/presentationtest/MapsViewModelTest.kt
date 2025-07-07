@@ -74,8 +74,7 @@ class MapsViewModelTest {
             .thenReturn(NetworkResult.Success(dummyResponse))
 
         viewModel.loadStoriesWithLocation()
-        advanceUntilIdle() // penting agar coroutine selesai
-
+        advanceUntilIdle()
         val result = viewModel.storiesWithLocation.getOrAwaitValue()
         assertEquals(dummyStories, result)
     }

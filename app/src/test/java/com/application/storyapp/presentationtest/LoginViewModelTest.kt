@@ -160,13 +160,12 @@ class LoginViewModelTest {
 
         viewModel.login(email, password)
 
-        // Cek loading true dulu
         val loadingState = viewModel.uiState.getOrAwaitValue()
         assertTrue(loadingState.isLoading)
 
         advanceUntilIdle()
 
-        // Cek loading false setelah selesai
+
         val finalState = viewModel.uiState.getOrAwaitValue()
         assertFalse(finalState.isLoading)
     }

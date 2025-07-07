@@ -75,11 +75,10 @@ class HomeViewModelTest {
 
     @Test
     fun `when loadStories returns empty - size is 0`() = runTest {
-        // Given
         val pagingData = PagingData.from(emptyList<Story>())
         coEvery { repository.getStoriesPagingData() } returns flowOf(pagingData)
 
-        // When
+
         viewModel = HomeViewModel(repository)
 
         val differ = AsyncPagingDataDiffer(

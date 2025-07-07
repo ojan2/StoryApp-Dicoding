@@ -30,6 +30,7 @@ import java.io.File
 class StoryRepository private constructor(
     private val apiService: ApiService,
     private val userPreferences: UserPreferences
+
 ) {
 
     suspend fun uploadStory(
@@ -91,8 +92,13 @@ class StoryRepository private constructor(
     }
 
     suspend fun getStories(page: Int, size: Int, location: Int = 0): NetworkResult<GetAllStoriesResponse> {
-        val token = userPreferences.getAuthToken().firstOrNull()
-            ?: return NetworkResult.Error("Authentication token not found. Please login again.")
+        val token = userPreferences.getAuthToken().firstOrNull() ?:
+        return NetworkResult.Error("Authentication token not found. Please login again.")
+
+        if (token.isEmpty()) {
+            return NetworkResult.Error("Authentication token not found. Please login again.")
+        }
+
         return try {
             val response = apiService.getStories("Bearer $token", page, size, location)
             if (response.error) NetworkResult.Error(response.message)
@@ -103,10 +109,15 @@ class StoryRepository private constructor(
     }
 
     private fun <T> handleException(e: Exception): NetworkResult<T> {
-        return when (e) {
-            is HttpException -> handleHttpException(e)
-            is IOException -> handleNetworkException(e)
-            else -> NetworkResult.Error(e.message ?: "An unexpected error occurred")
+        val actualException = (e as? RuntimeException)?.cause as? IOException ?: e
+
+        // Opsional: Logging untuk debug dan tracing
+        // Timber.e(actualException, "Exception occurred in StoryRepository")
+
+        return when (actualException) {
+            is HttpException -> handleHttpException(actualException)
+            is IOException -> handleNetworkException(actualException)
+            else -> NetworkResult.Error(actualException.message ?: "An unexpected error occurred")
         }
     }
 
@@ -115,9 +126,10 @@ class StoryRepository private constructor(
             val errorBody = e.response()?.errorBody()?.string()
             val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
             errorResponse.message ?: "HTTP ${e.code()} error occurred."
-        } catch (parseException: Exception) {
+        } catch (_: Exception) {
             "HTTP ${e.code()} error occurred."
         }
+
         return NetworkResult.Error(errorMessage)
     }
 
@@ -127,8 +139,10 @@ class StoryRepository private constructor(
             is SocketTimeoutException -> "Connection timeout. Please try again."
             else -> "Network error. Please check your connection and try again."
         }
+
         return NetworkResult.Error(errorMessage)
     }
+
 
     companion object {
         @Volatile
