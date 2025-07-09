@@ -83,7 +83,7 @@ class HomeFragment : Fragment() {
             btnAddStory.setOnClickListener {
                 findNavController().navigate(R.id.action_homeFragment_to_addStoryFragment)
             }
-            maps.setOnClickListener {
+            btnMaps.setOnClickListener {
                 findNavController().navigate(R.id.action_homeFragment_to_mapsFragment)
             }
             swipeRefresh.setOnRefreshListener {
@@ -94,42 +94,50 @@ class HomeFragment : Fragment() {
 
     private fun observeViewModel() {
         lifecycleScope.launchWhenStarted {
-            // Observe stories data
             viewModel.stories.collectLatest { pagingData ->
                 storyAdapter.submitData(pagingData)
             }
         }
 
         lifecycleScope.launchWhenStarted {
-            // Observe refresh state
             viewModel.isRefreshing.collect { isRefreshing ->
                 binding.swipeRefresh.isRefreshing = isRefreshing
-                if (!isRefreshing) {
-                    binding.progressBar.visibility = View.GONE
-                }
+                if (!isRefreshing) hideShimmer()
             }
         }
 
-        // Observe load states
         storyAdapter.addLoadStateListener { loadState ->
             when (loadState.refresh) {
                 is LoadState.Loading -> {
                     if (!binding.swipeRefresh.isRefreshing) {
-                        binding.progressBar.visibility = View.VISIBLE
+                        showShimmer()
                     }
                 }
+
                 is LoadState.Error -> {
                     binding.swipeRefresh.isRefreshing = false
-                    binding.progressBar.visibility = View.GONE
+                    hideShimmer()
                     showError((loadState.refresh as LoadState.Error).error.message)
                 }
+
                 else -> {
-                    binding.progressBar.visibility = View.GONE
+                    hideShimmer()
                 }
             }
         }
     }
 
+    private fun showShimmer() {
+        binding.shimmerLayout.visibility = View.VISIBLE
+        binding.shimmerLayout.startShimmer()
+        binding.rvStory.visibility = View.GONE
+    }
+
+    private fun hideShimmer() {
+        binding.shimmerLayout.stopShimmer()
+        binding.shimmerLayout.visibility = View.GONE
+        binding.rvStory.visibility = View.VISIBLE
+    }
     private fun showError(message: String?) {
         val errorMsg = message ?: "Unknown error occurred"
         if (errorMsg.contains("Unable to resolve host")) {
@@ -169,7 +177,8 @@ class HomeFragment : Fragment() {
                         R.id.loginFragment,
                         null,
                         navOptions {
-                            popUpTo(R.id.welcomeFragment) {
+                            // Membersihkan seluruh back stack
+                            popUpTo(R.id.navigation_menu) {
                                 inclusive = true
                             }
                             launchSingleTop = true

@@ -40,9 +40,9 @@ class HomeViewModelTest {
 
     @Test fun `when loadStories success - data is not null, size is correct, first item is correct`() = runTest {
         val dummyStories = listOf(
-            Story("1", "Story 1", "desc 1", "url1", "2021-10-10", -6.1809716f, 106.82445f),
-            Story("2", "Story 2", "desc 2", "url2", "2021-10-11", -6.1809716f, 106.82445f),
-            Story("3", "Story 3", "desc 3", "url3", "2021-10-12", -6.1809716f, 106.82445f)
+            Story("1", "Story 1", "desc 1", "url1", "2025-03-10", -6.1809716f, 106.82445f),
+            Story("2", "Story 2", "desc 2", "url2", "2025-03-11", -6.1809716f, 106.82445f),
+            Story("3", "Story 3", "desc 3", "url3", "2025-03-12", -6.1809716f, 106.82445f)
         )
 
         val pagingData = PagingData.from(dummyStories)
@@ -65,7 +65,6 @@ class HomeViewModelTest {
 
         advanceUntilIdle()
 
-        // Then
         val snapshot = differ.snapshot()
         Assert.assertNotNull(snapshot)
         Assert.assertEquals(3, snapshot.size)

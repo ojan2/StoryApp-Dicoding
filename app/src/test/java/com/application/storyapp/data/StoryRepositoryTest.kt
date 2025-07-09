@@ -1,7 +1,7 @@
 package com.application.storyapp.data
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.application.storyapp.MainCoroutineRule
+import com.application.storyapp.utils.MainCoroutineRule
 import com.application.storyapp.data.network.ApiService
 import com.application.storyapp.data.network.NetworkResult
 import com.application.storyapp.data.response.FileUploadResponse
@@ -50,7 +50,6 @@ class StoryRepositoryTest {
 
     @Before
     fun setUp() {
-        // Reset singleton sebelum membuat instance baru
         val field = StoryRepository::class.java.getDeclaredField("INSTANCE")
         field.isAccessible = true
         field.set(null, null)
@@ -126,8 +125,8 @@ class StoryRepositoryTest {
     fun `getStories success returns NetworkResult Success`() = runTest {
         val token = "dummy_token"
         val stories = listOf(
-            Story("1", "User1", "Desc1", "url", "2023-01-01"),
-            Story("2", "User2", "Desc2", "url", "2023-01-02")
+            Story("1", "uhuy", "Desc1", "url", "2025-01-01"),
+            Story("2", "ojan", "Desc2", "url", "2025-01-02")
         )
         val response = GetAllStoriesResponse(false, "success", stories)
 
@@ -181,7 +180,6 @@ class StoryRepositoryTest {
         val token = "dummy_token"
         whenever(userPreferences.getAuthToken()).thenReturn(flowOf(token))
 
-        // Ganti IOException dengan RuntimeException agar Mockito bisa menerima
         whenever(apiService.getStories(eq("Bearer $token"), any(), any(), any()))
             .thenThrow(RuntimeException("Generic network error"))
 
@@ -204,6 +202,4 @@ class StoryRepositoryTest {
         assertTrue(result is NetworkResult.Error)
         assertEquals("Connection timeout. Please try again.", (result as NetworkResult.Error).message)
     }
-
-
 }

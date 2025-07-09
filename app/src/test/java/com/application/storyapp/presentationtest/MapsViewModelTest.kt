@@ -1,27 +1,14 @@
 package com.application.storyapp.presentationtest
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.MutableLiveData
-import androidx.paging.*
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListUpdateCallback
-import com.application.storyapp.MainCoroutineRule
+import com.application.storyapp.utils.MainCoroutineRule
 import com.application.storyapp.data.StoryRepository
 import com.application.storyapp.data.network.NetworkResult
 import com.application.storyapp.data.response.GetAllStoriesResponse
-import com.application.storyapp.getOrAwaitValue
+import com.application.storyapp.utils.getOrAwaitValue
 import com.application.storyapp.model.Story
-import com.application.storyapp.presentation.home.HomeViewModel
 import com.application.storyapp.presentation.maps.MapsViewModel
-import io.mockk.coEvery
-import io.mockk.mockk
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.*
-import org.junit.After
-import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
@@ -60,8 +47,8 @@ class MapsViewModelTest {
     @Test
     fun `loadStoriesWithLocation should update LiveData with stories`() = runTest {
         val dummyStories = listOf(
-            Story("1", "Name", "Desc", "photoUrl", "2024-07-05", 1.0f, 2.0f),
-            Story("2", "Name", "Desc", "photoUrl", "2024-07-05", 1.0f, 2.0f),
+            Story("1", "Fauzan", "Desc", "photoUrl", "2025-07-05", 1.0f, 2.0f),
+            Story("2", "Fauzan", "Desc", "photoUrl", "2025-07-05", 1.0f, 2.0f),
 
         )
         val dummyResponse = GetAllStoriesResponse(

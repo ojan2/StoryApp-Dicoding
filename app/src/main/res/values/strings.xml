@@ -40,5 +40,7 @@
     <string name="error_pass_long">Panjang Kata Sandi Harus Minimal 8 Karakter </string>
     <string name="error_email">Email tidak boleh kosong </string>
     <string name="error_email_valid">Email harus aktif dan valid </string>
-    <string name="error_username">Username tidak boleh kosong </string>
+    <string name="error_username">Username Tidak boleh kosong</string>
+    <string name="img_maps">Maps </string>
+    <string name="hours">2 jam yang lalu </string>
 </resources>

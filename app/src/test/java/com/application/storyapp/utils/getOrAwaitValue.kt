@@ -1,4 +1,4 @@
-package com.application.storyapp
+package com.application.storyapp.utils
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer

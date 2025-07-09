@@ -27,37 +27,38 @@ class MainActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+
         window.statusBarColor = ContextCompat.getColor(this, R.color.second_blue)
         WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = true
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+
         userPreferences = UserPreferences.getInstance(this)
 
-
         var keepSplashOn = true
-
         splashScreen.setKeepOnScreenCondition { keepSplashOn }
 
         lifecycleScope.launch {
-            delay(1500)
-
             val isLoggedIn = userPreferences.isLoggedIn().first()
 
+            // Get NavController
             val navHostFragment = supportFragmentManager
                 .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
             val navController = navHostFragment.navController
 
-            val destination = if (isLoggedIn) R.id.homeFragment else R.id.welcomeFragment
-
-            withContext(Dispatchers.Main) {
-                navController.navigate(destination)
-                keepSplashOn = false
+            // Create new NavGraph with correct start destination
+            val navGraph = navController.navInflater.inflate(R.navigation.navigation_menu).apply {
+                // Set the proper start destination
+                setStartDestination(
+                    if (isLoggedIn) R.id.homeFragment else R.id.welcomeFragment
+                )
             }
+
+            // Apply the modified graph
+            navController.graph = navGraph
+
+            // After setting the graph, we can dismiss the splash
+            delay(1500) // Minimum splash duration
+            keepSplashOn = false
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.application.storyapp
+package com.application.storyapp.utils
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

@@ -1,11 +1,11 @@
 package com.application.storyapp.presentationtest
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.application.storyapp.MainCoroutineRule
+import com.application.storyapp.utils.MainCoroutineRule
 import com.application.storyapp.data.StoryRepository
 import com.application.storyapp.data.network.NetworkResult
 import com.application.storyapp.data.response.FileUploadResponse
-import com.application.storyapp.getOrAwaitValue
+import com.application.storyapp.utils.getOrAwaitValue
 import com.application.storyapp.presentation.add_story.AddStoryViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

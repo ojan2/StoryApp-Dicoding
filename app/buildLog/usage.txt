@@ -13519,14 +13519,14 @@ com.application.storyapp.data.network.ApiClient:
 com.application.storyapp.data.network.ApiClient$Companion:
     25:25:public final void initialize(android.content.Context)
 com.application.storyapp.data.network.ApiService$DefaultImpls
-com.application.storyapp.data.network.AuthRepository:
+com.application.storyapp.data.AuthRepository:
     74:74:public final kotlinx.coroutines.flow.Flow getAuthToken()
     75:75:public final kotlinx.coroutines.flow.Flow getUserId()
     76:76:public final kotlinx.coroutines.flow.Flow getUserName()
     77:77:public final kotlinx.coroutines.flow.Flow isLoggedIn()
     70:70:public final java.lang.Object logout(kotlin.coroutines.Continuation)
-com.application.storyapp.data.network.AuthRepository$Companion:
-    120:122:public final com.application.storyapp.data.network.AuthRepository getInstance(android.content.Context,com.application.storyapp.data.network.ApiService)
+com.application.storyapp.data.AuthRepository$Companion:
+    120:122:public final com.application.storyapp.data.AuthRepository getInstance(android.content.Context,com.application.storyapp.data.network.ApiService)
 com.application.storyapp.data.request.LoginRequest:
     public static synthetic com.application.storyapp.data.request.LoginRequest copy$default(com.application.storyapp.data.request.LoginRequest,java.lang.String,java.lang.String,int,java.lang.Object)
     public final java.lang.String component1()

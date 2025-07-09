@@ -1,6 +1,8 @@
-package com.application.storyapp.data.network
+package com.application.storyapp.data
 
 import com.application.storyapp.data.data_store.UserPreferences
+import com.application.storyapp.data.network.ApiService
+import com.application.storyapp.data.network.NetworkResult
 import com.application.storyapp.data.request.LoginRequest
 import com.application.storyapp.data.request.RegisterRequest
 import com.application.storyapp.data.response.ErrorResponse
@@ -30,12 +32,8 @@ class AuthRepository private constructor(
             } else {
                 NetworkResult.Success(response)
             }
-        } catch (e: HttpException) {
-            handleHttpException(e)
-        } catch (e: IOException) {
-            handleNetworkException(e)
         } catch (e: Exception) {
-            NetworkResult.Error(e.message ?: "An unexpected error occurred")
+            handleException(e)
         }
     }
 
@@ -58,12 +56,22 @@ class AuthRepository private constructor(
                 }
                 NetworkResult.Success(response)
             }
-        } catch (e: HttpException) {
-            handleHttpException(e)
-        } catch (e: IOException) {
-            handleNetworkException(e)
         } catch (e: Exception) {
-            NetworkResult.Error(e.message ?: "An unexpected error occurred")
+            handleException(e)
+        }
+    }
+
+    private fun <T> handleException(e: Exception): NetworkResult<T> {
+        val actualException = when {
+            e is RuntimeException && e.cause is IOException -> e.cause as IOException
+            else -> e
+        }
+
+        return when (actualException) {
+            is HttpException -> handleHttpException(actualException)
+            is SocketTimeoutException -> NetworkResult.Error("Connection timeout. Please try again.")
+            is IOException -> handleNetworkException(actualException)
+            else -> NetworkResult.Error(actualException.message ?: "An unexpected error occurred")
         }
     }
 

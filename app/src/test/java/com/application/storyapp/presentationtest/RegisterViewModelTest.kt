@@ -1,11 +1,11 @@
 package com.application.storyapp.presentationtest
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.application.storyapp.MainCoroutineRule
-import com.application.storyapp.data.network.AuthRepository
+import com.application.storyapp.utils.MainCoroutineRule
+import com.application.storyapp.data.AuthRepository
 import com.application.storyapp.data.network.NetworkResult
 import com.application.storyapp.data.response.RegisterResponse
-import com.application.storyapp.getOrAwaitValue
+import com.application.storyapp.utils.getOrAwaitValue
 import com.application.storyapp.presentation.register.RegisterViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -41,8 +41,8 @@ class RegisterViewModelTest {
 
     @Test
     fun `when register success should emit success event`() = runTest {
-        val name = "John Doe"
-        val email = "john@example.com"
+        val name = "Fauzan"
+        val email = "fauzan@gmail.com"
         val password = "password123"
 
         val response = RegisterResponse(
@@ -66,8 +66,8 @@ class RegisterViewModelTest {
 
     @Test
     fun `when register failed should emit error event`() = runTest {
-        val name = "John Doe"
-        val email = "john@example.com"
+        val name = "Fauzan"
+        val email = "fauzan@example.com"
         val password = "password123"
         val errorMsg = "Email already taken"
 
@@ -114,7 +114,7 @@ class RegisterViewModelTest {
     @Test
     fun `when password is empty should return validation error`() {
         val name = ""
-        val email = "john@example.com"
+        val email = "fauzan@example.com"
         val invalidPassword = ""
 
         viewModel.register(name, email, invalidPassword)

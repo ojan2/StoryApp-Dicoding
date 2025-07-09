@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.application.storyapp.utils.Event
 import com.application.storyapp.utils.ValidationUtils
 import com.application.storyapp.utils.RegisterUIState
-import com.application.storyapp.data.network.AuthRepository
+import com.application.storyapp.data.AuthRepository
 import com.application.storyapp.data.network.NetworkResult
 import kotlinx.coroutines.launch
 

@@ -5,4 +5,68 @@
     <color name="blue">#2586F8</color>
     <color name="secondary_green">#EBF8FB</color>
     <color name="second_blue">#D9EBFB</color>
+
+    <!-- Primary Colors -->
+    <color name="primary">#6750A4</color>
+    <color name="on_primary">#FFFFFF</color>
+    <color name="primary_container">#EADDFF</color>
+    <color name="on_primary_container">#21005D</color>
+
+    <!-- Secondary Colors -->
+    <color name="secondary">#625B71</color>
+    <color name="on_secondary">#FFFFFF</color>
+    <color name="secondary_container">#E8DEF8</color>
+    <color name="on_secondary_container">#1D192B</color>
+
+    <!-- Tertiary Colors -->
+    <color name="tertiary">#7D5260</color>
+    <color name="on_tertiary">#FFFFFF</color>
+    <color name="tertiary_container">#FFD8E4</color>
+    <color name="on_tertiary_container">#31111D</color>
+
+    <!-- Error Colors -->
+    <color name="error">#B3261E</color>
+    <color name="on_error">#FFFFFF</color>
+    <color name="error_container">#F9DEDC</color>
+    <color name="on_error_container">#410E0B</color>
+
+    <!-- Surface Colors -->
+    <color name="surface">#FFFBFE</color>
+    <color name="on_surface">#1C1B1F</color>
+    <color name="surface_variant">#E7E0EC</color>
+    <color name="on_surface_variant">#49454F</color>
+    <color name="surface_inverse">#313033</color>
+    <color name="on_surface_inverse">#F4EFF4</color>
+
+    <!-- Background Colors -->
+    <color name="background_primary">#FEFBFF</color>
+    <color name="on_background">#1C1B1F</color>
+
+    <!-- Outline Colors -->
+    <color name="outline">#79747E</color>
+    <color name="outline_variant">#CAC4D0</color>
+
+    <!-- Additional Colors for Social Media -->
+    <color name="like_color">#FF5722</color>
+    <color name="comment_color">#2196F3</color>
+    <color name="share_color">#4CAF50</color>
+    <color name="bookmark_color">#9C27B0</color>
+
+    <!-- Status Colors -->
+    <color name="online_status">#4CAF50</color>
+    <color name="offline_status">#9E9E9E</color>
+
+    <!-- Gradient Colors -->
+    <color name="gradient_start">#667eea</color>
+    <color name="gradient_end">#764ba2</color>
+
+    <!-- Transparent Colors -->
+    <color name="transparent">#00000000</color>
+    <color name="semi_transparent">#80000000</color>
+
+    <!-- Dark Mode Colors (optional) -->
+    <color name="dark_surface">#121212</color>
+    <color name="dark_on_surface">#FFFFFF</color>
+    <color name="dark_background">#000000</color>
+    <color name="dark_on_background">#FFFFFF</color>
 </resources>

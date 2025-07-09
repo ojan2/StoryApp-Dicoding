@@ -1,11 +1,11 @@
 package com.application.storyapp.presentationtest
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.application.storyapp.MainCoroutineRule
-import com.application.storyapp.data.network.AuthRepository
+import com.application.storyapp.utils.MainCoroutineRule
+import com.application.storyapp.data.AuthRepository
 import com.application.storyapp.data.network.NetworkResult
 import com.application.storyapp.data.response.LoginResponse
-import com.application.storyapp.getOrAwaitValue
+import com.application.storyapp.utils.getOrAwaitValue
 import com.application.storyapp.presentation.login.LoginViewModel
 import com.application.storyapp.utils.LoginResult
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -60,11 +60,10 @@ class LoginViewModelTest {
         advanceUntilIdle()
 
         val state = viewModel.uiState.getOrAwaitValue()
-        println("State after success: $state") // debug
+        println("State after success: $state")
 
         assertFalse(state.isLoading)
-        assertTrue(state.isSuccess) // pastikan ini benar di ViewModel
-
+        assertTrue(state.isSuccess)
         val success = viewModel.successEvent.getOrAwaitValue().getContentIfNotHandled()
         assertNotNull(success)
         assertEquals(loginResult.token, success?.token)

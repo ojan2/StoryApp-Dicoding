@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:cardCornerRadius="10dp"
+    android:layout_margin="10dp"
+    android:elevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                tools:ignore="UselessParent">
+
+                <!-- Profile Section -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <!-- Profile Image Placeholder -->
+                    <View
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@android:color/darker_gray"
+                        android:shape="oval"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <!-- Name Placeholder -->
+                        <View
+                            android:layout_width="120dp"
+                            android:layout_height="20dp"
+                            android:layout_marginBottom="4dp"
+                            android:background="@android:color/darker_gray"/>
+
+                        <!-- Time Placeholder -->
+                        <View
+                            android:layout_width="80dp"
+                            android:layout_height="16dp"
+                            android:background="@android:color/darker_gray"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Image Placeholder -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:background="@android:color/darker_gray"/>
+
+                <!-- Description Placeholder -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="16dp"
+                        android:layout_marginBottom="4dp"
+                        android:background="@android:color/darker_gray"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="16dp"
+                        android:layout_marginBottom="4dp"
+                        android:background="@android:color/darker_gray"/>
+
+                    <View
+                        android:layout_width="200dp"
+                        android:layout_height="16dp"
+                        android:background="@android:color/darker_gray"/>
+                </LinearLayout>
+            </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

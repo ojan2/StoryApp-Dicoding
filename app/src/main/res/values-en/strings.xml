@@ -41,4 +41,6 @@
     <string name="error_email">Email cannot be empty</string>
     <string name="error_email_valid">Email must be active and valid</string>
     <string name="error_username">Username cannot be empty </string>
+    <string name="img_maps">Maps </string>
+    <string name="hours">2 hours ago </string>
 </resources>

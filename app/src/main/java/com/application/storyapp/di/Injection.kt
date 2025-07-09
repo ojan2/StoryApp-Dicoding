@@ -4,7 +4,7 @@ import android.content.Context
 import com.application.storyapp.data.StoryRepository
 import com.application.storyapp.data.data_store.UserPreferences
 import com.application.storyapp.data.network.ApiClient
-import com.application.storyapp.data.network.AuthRepository
+import com.application.storyapp.data.AuthRepository
 
 object Injection {
 
