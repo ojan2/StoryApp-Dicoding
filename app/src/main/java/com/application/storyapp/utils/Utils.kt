@@ -1,4 +1,4 @@
-@file:Suppress("UNREACHABLE_CODE")
+@file:Suppress("UNREACHABLE_CODE", "SameParameterValue", "SameParameterValue")
 
 package com.application.storyapp.utils
 

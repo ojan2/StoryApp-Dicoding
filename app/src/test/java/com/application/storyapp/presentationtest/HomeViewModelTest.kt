@@ -38,7 +38,8 @@ class HomeViewModelTest {
         Dispatchers.resetMain()
     }
 
-    @Test fun `when loadStories success - data is not null, size is correct, first item is correct`() = runTest {
+    @Test
+    fun `when loadStories success - data is not null, size is correct, first item is correct`() = runTest {
         val dummyStories = listOf(
             Story("1", "Story 1", "desc 1", "url1", "2025-03-10", -6.1809716f, 106.82445f),
             Story("2", "Story 2", "desc 2", "url2", "2025-03-11", -6.1809716f, 106.82445f),
@@ -64,11 +65,22 @@ class HomeViewModelTest {
         }
 
         advanceUntilIdle()
-
         val snapshot = differ.snapshot()
+
         Assert.assertNotNull(snapshot)
+
         Assert.assertEquals(3, snapshot.size)
-        Assert.assertEquals("1", snapshot[0]?.id)
+
+        val firstItem = snapshot[0]
+        Assert.assertNotNull(firstItem)
+        Assert.assertEquals("1", firstItem?.id)
+        Assert.assertEquals("Story 1", firstItem?.name)
+        Assert.assertEquals("desc 1", firstItem?.description)
+        Assert.assertEquals("url1", firstItem?.photoUrl)
+        Assert.assertEquals("2025-03-10", firstItem?.createdAt)
+        Assert.assertEquals(-6.1809716f, firstItem?.lat)
+        Assert.assertEquals(106.82445f, firstItem?.lon)
+
         job.cancel()
     }
 
@@ -76,7 +88,6 @@ class HomeViewModelTest {
     fun `when loadStories returns empty - size is 0`() = runTest {
         val pagingData = PagingData.from(emptyList<Story>())
         coEvery { repository.getStoriesPagingData() } returns flowOf(pagingData)
-
 
         viewModel = HomeViewModel(repository)
 
@@ -99,7 +110,6 @@ class HomeViewModelTest {
         Assert.assertTrue(snapshot.isEmpty())
         job.cancel()
     }
-
 
     object DiffCallback : DiffUtil.ItemCallback<Story>() {
         override fun areItemsTheSame(oldItem: Story, newItem: Story): Boolean {

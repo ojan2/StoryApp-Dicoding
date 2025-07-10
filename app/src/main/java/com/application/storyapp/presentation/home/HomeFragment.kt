@@ -177,7 +177,6 @@ class HomeFragment : Fragment() {
                         R.id.loginFragment,
                         null,
                         navOptions {
-                            // Membersihkan seluruh back stack
                             popUpTo(R.id.navigation_menu) {
                                 inclusive = true
                             }

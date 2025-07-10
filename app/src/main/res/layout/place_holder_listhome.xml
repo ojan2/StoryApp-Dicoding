@@ -27,7 +27,7 @@
                     android:orientation="horizontal"
                     android:padding="10dp">
 
-                    <!-- Profile Image Placeholder -->
+                  
                     <View
                         android:layout_width="48dp"
                         android:layout_height="48dp"

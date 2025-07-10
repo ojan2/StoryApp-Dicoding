@@ -111,9 +111,6 @@ class StoryRepository private constructor(
     private fun <T> handleException(e: Exception): NetworkResult<T> {
         val actualException = (e as? RuntimeException)?.cause as? IOException ?: e
 
-        // Opsional: Logging untuk debug dan tracing
-        // Timber.e(actualException, "Exception occurred in StoryRepository")
-
         return when (actualException) {
             is HttpException -> handleHttpException(actualException)
             is IOException -> handleNetworkException(actualException)

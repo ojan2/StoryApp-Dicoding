@@ -1,0 +1,211 @@
+LoginViewModelTest
+	1	Ketika berhasil login
+		•	Memastikan memanggil repository.login(email, password).
+		•	Memastikan mengembalikan NetworkResult.Success.
+		•	Memastikan isLoading menjadi false.
+		•	Memastikan isSuccess menjadi true.
+		•	Memastikan successEvent tidak null.
+		•	Memastikan token sesuai dengan yang diharapkan.
+		•	Memastikan navigateToMainEvent tidak null.
+	2	Ketika gagal login
+		•	Memastikan memanggil repository.login(email, password).
+		•	Memastikan mengembalikan NetworkResult.Error.
+		•	Memastikan isLoading menjadi false.
+		•	Memastikan isSuccess menjadi false.
+		•	Memastikan errorEvent tidak null.
+		•	Memastikan message sesuai dengan yang diharapkan.
+	3	Ketika email tidak valid
+		•	Memastikan emailError berisi "Enter a valid email address".
+		•	Memastikan successEvent bernilai null.
+	4	Ketika password kosong
+		•	Memastikan passwordError berisi "Password is required".
+		•	Memastikan successEvent bernilai null.
+	5	Ketika password kurang dari 8 karakter
+		•	Memastikan passwordError berisi "Password must be at least 8 characters".
+		•	Memastikan successEvent bernilai null.
+	6	Ketika login error tanpa message
+		•	Memastikan memanggil repository.login(email, password).
+		•	Memastikan mengembalikan NetworkResult.Error(null).
+		•	Memastikan errorEvent berisi "Login failed. Please try again.".
+	7	Ketika proses login berjalan
+		•	Memastikan isLoading menjadi true saat login dipanggil.
+		•	Memastikan isLoading menjadi false setelah selesai.
+
+
+RegisterViewModelTest
+	1	Ketika berhasil register
+		•	Memastikan memanggil repository.register(name, email, password).
+		•	Memastikan mengembalikan NetworkResult.Success.
+		•	Memastikan isLoading menjadi false.
+		•	Memastikan isSuccess menjadi true.
+		•	Memastikan successEvent tidak null.
+
+	2	Ketika gagal register
+		•	Memastikan memanggil repository.register(name, email, password).
+		•	Memastikan mengembalikan NetworkResult.Error.
+		•	Memastikan isLoading menjadi false.
+		•	Memastikan isSuccess menjadi false.
+		•	Memastikan errorEvent tidak null.
+		•	Memastikan message sesuai dengan yang diharapkan.
+
+	3	Ketika nama tidak valid
+		•	Memastikan nameError berisi "Name must be at least 2 characters".
+		•	Memastikan successEvent bernilai null.
+
+	4	Ketika email tidak valid
+		•	Memastikan emailError berisi "Enter a valid email address".
+		•	Memastikan successEvent bernilai null.
+
+	5	Ketika password kosong
+		•	Memastikan passwordError berisi "Password is required".
+		•	Memastikan successEvent bernilai null.
+
+	6	Ketika semua input tidak valid
+		•	Memastikan nameError berisi "Name is required".
+		•	Memastikan emailError berisi "Enter a valid email address".
+		•	Memastikan passwordError berisi "Password must be at least 8 characters".
+		•	Memastikan successEvent bernilai null.
+
+	7	Ketika register gagal dengan pesan error
+		•	Memastikan memanggil repository.register(name, email, password).
+		•	Memastikan mengembalikan NetworkResult.Error.
+		•	Memastikan isLoading menjadi false.
+		•	Memastikan isSuccess menjadi false.
+		•	Memastikan errorEvent tidak null.
+		•	Memastikan message sesuai dengan error yang diharapkan.
+
+MapsViewModelTest
+	1	Ketika berhasil load stories dengan lokasi
+		•	Memastikan memanggil storyRepository.getStories(1, 100, 1).
+		•	Memastikan mengembalikan NetworkResult.Success.
+		•	Memastikan storiesWithLocation berisi data stories.
+		•	Memastikan data sesuai dengan yang diharapkan.
+
+	2	Ketika gagal load stories dengan lokasi
+		•	Memastikan memanggil storyRepository.getStories(1, 100, 1).
+		•	Memastikan mengembalikan NetworkResult.Error.
+		•	Memastikan storiesWithLocation kosong.
+		•	Memastikan errorMessage tidak null.
+		•	Memastikan isLoading menjadi false.
+		•	Memastikan message sesuai dengan yang diharapkan.
+
+	3	Ketika tidak ada stories tersedia
+		•	Memastikan getLatLngBounds mengembalikan null.
+
+	4	Ketika map ready
+		•	Memastikan onMapReady mengupdate isMapReady menjadi true.
+
+	5	Ketika terjadi network error
+		•	Memastikan memanggil storyRepository.getStories(1, 100, 1).
+		•	Memastikan mengembalikan NetworkResult.Error.
+		•	Memastikan storiesWithLocation kosong.
+		•	Memastikan errorMessage berisi "No internet connection. Please check your network.".
+		•	Memastikan isLoading menjadi false.
+
+
+HomeViewModelTest
+	1	Ketika berhasil load stories dengan paging
+		•	Memastikan memanggil repository.getStoriesPagingData().
+		•	Memastikan mengembalikan PagingData dengan data stories.
+		•	Memastikan data tidak null.
+		•	Memastikan jumlah data sesuai dengan yang diharapkan.
+		•	Memastikan item pertama sesuai dengan yang diharapkan.
+	2	Ketika load stories mengembalikan data kosong
+		•	Memastikan memanggil repository.getStoriesPagingData().
+		•	Memastikan mengembalikan PagingData kosong.
+		•	Memastikan jumlah data adalah 0.
+		•	Memastikan snapshot isEmpty() bernilai true.
+
+
+AddStoryViewModelTest
+	1	Ketika berhasil upload story
+		•	Memastikan memanggil repository.uploadStory(file, description, null, null).
+		•	Memastikan mengembalikan NetworkResult.Success.
+		•	Memastikan isSuccess menjadi true.
+		•	Memastikan successEvent tidak null.
+		•	Memastikan message sesuai dengan yang diharapkan.
+	2	Ketika gagal upload story
+		•	Memastikan memanggil repository.uploadStory(file, description, null, null).
+		•	Memastikan mengembalikan NetworkResult.Error.
+		•	Memastikan isSuccess menjadi false.
+		•	Memastikan errorEvent tidak null.
+		•	Memastikan message sesuai dengan yang diharapkan.
+	3	Ketika deskripsi kosong
+		•	Memastikan descriptionError berisi "Description cannot be empty".
+	4	Ketika image file tidak diset
+		•	Memastikan imageError berisi "Please select an image".
+
+StoryRepositoryTest
+	1  Ketika upload story berhasil
+		•	Memastikan memanggil apiService.uploadStory() dengan parameter yang benar
+		•	Memastikan mengembalikan NetworkResult.Success
+		•	Memastikan message response sesuai dengan yang diharapkan ("Story created successfully")
+		•	Memastikan menggunakan token yang valid dari user preferences
+
+	2 Ketika upload story tanpa token
+		•	Memastikan mengecek token dari user preferences
+		•	Memastikan mengembalikan NetworkResult.Error
+		•	Memastikan error message adalah "Authentication token not found. Please login again."
+	3.  Ketika upload story dengan token null
+		•	Memastikan mengecek token dari user preferences
+		•	Memastikan mengembalikan NetworkResult.Error
+		•	Memastikan error message adalah "Authentication token not found. Please login again."
+
+	4. Ketika upload story mengalami RuntimeException
+		•	Memastikan menangani exception dengan baik
+		•	Memastikan mengembalikan NetworkResult.Error
+		•	Memastikan error message sesuai dengan exception yang terjadi ("Network down")
+
+	5. Ketika get stories berhasil
+		•	Memastikan memanggil apiService.getStories() dengan parameter yang benar
+		•	Memastikan mengembalikan NetworkResult.Success
+		•	Memastikan jumlah data stories sesuai dengan yang diharapkan (2 stories)
+		•	Memastikan message response sesuai ("success")
+		•	Memastikan menggunakan token yang valid
+
+	6. Ketika get stories dengan token null
+		•	Memastikan mengecek token dari user preferences
+		•	Memastikan mengembalikan NetworkResult.Error
+		•	Memastikan error message adalah "Authentication token not found. Please login again."
+
+	7. Ketika get stories dengan token kosong
+		•	Memastikan mengecek token dari user preferences
+		•	Memastikan mengembalikan NetworkResult.Error
+		•	Memastikan error message adalah "Authentication token not found. Please login again."
+
+	8. Ketika get stories mengalami HttpException
+		•	Memastikan menangani HTTP error dengan baik
+		•	Memastikan mengembalikan NetworkResult.Error
+		•	Memastikan error message diparsing dari response body ("HTTP 400 error occurred.")
+
+	9. Ketika get stories mengalami RuntimeException
+		•	Memastikan menangani generic exception dengan baik
+		•	Memastikan mengembalikan NetworkResult.Error
+		•	Memastikan error message sesuai dengan exception ("Generic network error")
+
+	10. Ketika get stories mengalami SocketTimeoutException
+		•	Memastikan menangani timeout exception dengan baik
+		•	Memastikan mengembalikan NetworkResult.Error
+		•	Memastikan error message adalah "Connection timeout. Please try again."
+
+AuthRepositoryTest
+	1. Ketika register berhasil
+		•	Memastikan memanggil apiService.register() dengan parameter yang benar
+		•	Memastikan mengembalikan NetworkResult.Success
+		•	Memastikan message response sesuai dengan yang diharapkan ("User registered successfully")
+		•	Memastikan response error flag adalah false
+	2.  Ketika register dengan API error
+		•	Memastikan memanggil apiService.register() dengan parameter yang benar
+		•	Memastikan mengembalikan NetworkResult.Error
+		•	Memastikan error message sesuai dengan response API ("Email already used")
+		•	Memastikan menangani response error flag true
+	3. Ketika register mengalami IOException (timeout)
+		•	Memastikan menangani network timeout exception
+		•	Memastikan mengembalikan NetworkResult.Error
+		•	Memastikan error message adalah "Connection timeout. Please try again."
+	4.  Ketika login berhasil
+		•	Memastikan memanggil apiService.login() dengan parameter yang benar
+		•	Memastikan mengembalikan NetworkResult.Success
+		•	Memastikan message response sesuai ("Login successful")
+		•	Memastikan menyimpan token, userId, dan name ke user preferences
+		•	Memastikan loginResult berisi data yang benar (userId: "1", name: "Fauzan", token: "Azzii1m2ksa")

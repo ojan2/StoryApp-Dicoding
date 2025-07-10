@@ -81,7 +81,6 @@ class AuthRepositoryTest {
     }
 
 
-
     @Test
     fun `login success returns NetworkResult Success and saves token`() = runTest {
         val loginResult = LoginResult(userId = "1", name = "Fauzan", token = "Azzii1m2ksa")
