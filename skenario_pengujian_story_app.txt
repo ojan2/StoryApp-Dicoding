@@ -113,7 +113,7 @@ HomeViewModelTest
 	2	Ketika load stories mengembalikan data kosong
 		•	Memastikan memanggil repository.getStoriesPagingData().
 		•	Memastikan mengembalikan PagingData kosong.
-		•	Memastikan jumlah data adalah 0.
+		•	Memastikan jumlah data yang dikembalikan 0.
 		•	Memastikan snapshot isEmpty() bernilai true.
 
 

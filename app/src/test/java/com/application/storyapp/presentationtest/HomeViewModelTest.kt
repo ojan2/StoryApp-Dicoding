@@ -66,20 +66,12 @@ class HomeViewModelTest {
 
         advanceUntilIdle()
         val snapshot = differ.snapshot()
-
         Assert.assertNotNull(snapshot)
-
         Assert.assertEquals(3, snapshot.size)
 
         val firstItem = snapshot[0]
         Assert.assertNotNull(firstItem)
-        Assert.assertEquals("1", firstItem?.id)
-        Assert.assertEquals("Story 1", firstItem?.name)
-        Assert.assertEquals("desc 1", firstItem?.description)
-        Assert.assertEquals("url1", firstItem?.photoUrl)
-        Assert.assertEquals("2025-03-10", firstItem?.createdAt)
-        Assert.assertEquals(-6.1809716f, firstItem?.lat)
-        Assert.assertEquals(106.82445f, firstItem?.lon)
+        Assert.assertEquals(dummyStories[0], snapshot[0])
 
         job.cancel()
     }
@@ -107,7 +99,7 @@ class HomeViewModelTest {
         advanceUntilIdle()
 
         val snapshot = differ.snapshot()
-        Assert.assertTrue(snapshot.isEmpty())
+        Assert.assertEquals(0, snapshot.size)
         job.cancel()
     }
 
